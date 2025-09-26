@@ -1,3 +1,26 @@
-body {
-    background-color: skyblue;
+@import './pages/home.css';
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    transition: all 0.3s ease-in-out;
 }
+
+body {
+    
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+img {
+  vertical-align: top;
+  max-width: 100%;
+  height: auto;
+}
+
+:root {
+}
+
