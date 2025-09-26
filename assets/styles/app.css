@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 @import './pages/home.css';
 
 * {
@@ -8,7 +12,6 @@
 }
 
 body {
-    
 }
 
 html {
@@ -22,5 +25,6 @@ img {
 }
 
 :root {
+    --gradient: linear-gradient(0.25turn, rgb(44, 93, 241), rgb(52, 150, 108));
 }
 

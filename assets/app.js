@@ -1,5 +1,6 @@
 import './bootstrap.js';
 import './styles/app.css';
+import './js/map.js';
 
 /*
  * Welcome to your app's main JavaScript file!
