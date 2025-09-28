@@ -1,5 +1,6 @@
 import './bootstrap.js';
 import './styles/app.css';
+import '@tailwindplus/elements';
 import './js/map.js';
 
 /*

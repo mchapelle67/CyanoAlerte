@@ -5,7 +5,19 @@ module.exports = {
     "./templates/**/*.html.twig",
   ],
   theme: {
-    extend: {},
+    fontFamily: {
+      'sans': ['Montserrat', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'sans-serif'],
+      'serif': ['Georgia', 'Cambria', 'Times New Roman', 'serif'],
+      'mono': ['JetBrains Mono', 'Fira Code', 'Consolas', 'monospace'],
+    },
+    extend: {
+      fontFamily: {
+        'primary': 'var(--font-primary)',
+        'secondary': 'var(--font-secondary)', 
+        'montserrat': ['Montserrat', 'sans-serif'],
+        'roboto': ['Roboto', 'sans-serif'],
+      }
+    },
   },
   plugins: [],
 }
