@@ -8,7 +8,23 @@
 
 {% block body %}
 <main>
-    <div id="map"></div>
+    <h1></h1>
+    <section>
+        <div id="map"></div>
+    </section>
+    <section>
+        <select class="select-department" name="select-department" id="select-department">
+            <option value="">Veuillez sélectionner un département</option>
+            {% for department in departments %}
+                <option value="{{ department.code }}">{{ department.nom }}</option>
+            {% endfor %}        
+        </select>
+    </section>
 </main>
 
 {% endblock %}
+
+{# {% block javascript %}
+    {{ parent() }}
+    <script src="{{ asset('js/search-city.js') }}"></script>
+{% endblock %} #}
