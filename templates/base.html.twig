@@ -21,7 +21,7 @@
         {# <link rel="icon" href=""> #}
         
         {% block stylesheets %}
-        {# Webpack Encore CSS #}
+        {# webpack Encore CSS #}
         {{ encore_entry_link_tags('app') }}
         {# leafletjs #}
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
@@ -34,7 +34,7 @@
         <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
             integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
             crossorigin=""></script>
-        {# Webpack Encore JS #}
+        {# webpack Encore JS #}
         {{ encore_entry_script_tags('app') }}
         {% endblock %}
     </head>
