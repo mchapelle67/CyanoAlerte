@@ -7,6 +7,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: AlertRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Alert
 {
     #[ORM\Id]
@@ -17,14 +18,14 @@ class Alert
     #[ORM\Column(length: 50)]
     private ?string $toxicity_alert = null;
 
-    #[ORM\Column]
+    #[ORM\Column(type: 'datetime_immutable')]
     private ?\DateTimeImmutable $created_at = null;
 
-    #[ORM\Column]
+    #[ORM\Column(type: 'datetime_immutable')]
     private ?\DateTimeImmutable $updated_at = null;
 
     #[ORM\Column]
-    private ?bool $is_verified = null;
+    private ?bool $is_verified = false;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $source = null;
@@ -32,7 +33,7 @@ class Alert
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
-    #[ORM\ManyToOne(inversedBy: 'alerts')]
+    #[ORM\ManyToOne(targetEntity: Waterbody::class, inversedBy: 'alerts')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Waterbody $waterbody = null;
 
@@ -58,9 +59,10 @@ class Alert
         return $this->created_at;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $created_at): static
+    #[ORM\PrePersist]
+    public function setCreatedAt(): static
     {
-        $this->created_at = $created_at;
+        $this->created_at = new DateTimeImmutable();
 
         return $this;
     }
@@ -70,9 +72,11 @@ class Alert
         return $this->updated_at;
     }
 
-    public function setUpdatedAt(\DateTimeImmutable $updated_at): static
+    #[ORM\PrePersist]
+    #[ORM\PreUpdate]
+    public function setUpdatedAt(): static
     {
-        $this->updated_at = $updated_at;
+        $this->updated_at = new DateTimeImmutable();
 
         return $this;
     }
