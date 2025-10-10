@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\WaterbodyRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: WaterbodyRepository::class)]
@@ -30,6 +32,21 @@ class Waterbody
 
     #[ORM\Column(length: 30)]
     private ?string $postal_code = null;
+
+    #[ORM\ManyToOne(inversedBy: 'waterbodies')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?WaterbodyType $type = null;
+
+    /**
+     * @var Collection<int, Alert>
+     */
+    #[ORM\OneToMany(targetEntity: Alert::class, mappedBy: 'waterbody', orphanRemoval: true)]
+    private Collection $alerts;
+
+    public function __construct()
+    {
+        $this->alerts = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -104,6 +121,48 @@ class Waterbody
     public function setPostalCode(string $postal_code): static
     {
         $this->postal_code = $postal_code;
+
+        return $this;
+    }
+
+    public function getType(): ?WaterbodyType
+    {
+        return $this->type;
+    }
+
+    public function setType(?WaterbodyType $type): static
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Alert>
+     */
+    public function getAlerts(): Collection
+    {
+        return $this->alerts;
+    }
+
+    public function addAlert(Alert $alert): static
+    {
+        if (!$this->alerts->contains($alert)) {
+            $this->alerts->add($alert);
+            $alert->setWaterbody($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAlert(Alert $alert): static
+    {
+        if ($this->alerts->removeElement($alert)) {
+            // set the owning side to null (unless already changed)
+            if ($alert->getWaterbody() === $this) {
+                $alert->setWaterbody(null);
+            }
+        }
 
         return $this;
     }
