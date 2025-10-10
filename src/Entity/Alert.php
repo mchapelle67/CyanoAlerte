@@ -33,7 +33,7 @@ class Alert
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
-    #[ORM\ManyToOne(targetEntity: Waterbody::class, inversedBy: 'alerts')]
+    #[ORM\ManyToOne(targetEntity: Waterbody::class, inversedBy: 'alerts', cascade: ['persist'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?Waterbody $waterbody = null;
 

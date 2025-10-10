@@ -13,12 +13,7 @@
         <div id="map"></div>
     </section>
     <section>
-        <select class="select-department" name="select-department" id="select-department">
-            <option value="">Veuillez sélectionner un département</option>
-            {% for department in departments %}
-                <option value="{{ department.code }}">{{ department.nom }}</option>
-            {% endfor %}        
-        </select>
+        {{ form(alert_form) }}
     </section>
 </main>
 

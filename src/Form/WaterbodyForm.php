@@ -4,12 +4,14 @@ namespace App\Form;
 
 use App\Entity\Waterbody;
 use App\Entity\WaterbodyType;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\FormTypeInterface;
 
-class WaterbodyTypeForm extends AbstractType
+class WaterbodyForm extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -28,9 +30,10 @@ class WaterbodyTypeForm extends AbstractType
             ->add('postal_code', TextType::class, [
                 'label' => 'Code postal'
             ])
-            ->add('type', EntityType::class, [
-                'class' => self::class,
-                'choice_label' => 'id',
+            ->add('type', EntityType::class, [     
+                'class' => WaterbodyType::class,    
+                'choice_label' => 'type',          
+                'label' => 'Type de plan d\'eau'
             ])
         ;
     }

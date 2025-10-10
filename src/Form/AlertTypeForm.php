@@ -3,11 +3,11 @@
 namespace App\Form;
 
 use App\Entity\Alert;
-use App\Entity\Waterbody;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use App\Form\WaterbodyForm;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class AlertTypeForm extends AbstractType
 {
@@ -28,7 +28,7 @@ class AlertTypeForm extends AbstractType
                     'rows' => 3
                 ]
             ])
-            ->add('waterbody', WaterbodyTypeForm::class)
+            ->add('waterbody', WaterbodyForm::class)
         ;
     }
 
