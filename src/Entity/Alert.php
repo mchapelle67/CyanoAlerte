@@ -2,9 +2,9 @@
 
 namespace App\Entity;
 
-use App\Repository\AlertRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\AlertRepository;
 
 #[ORM\Entity(repositoryClass: AlertRepository::class)]
 #[ORM\HasLifecycleCallbacks]
@@ -14,9 +14,6 @@ class Alert
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-
-    #[ORM\Column(length: 50)]
-    private ?string $toxicity_alert = null;
 
     #[ORM\Column(type: 'datetime_immutable')]
     private ?\DateTimeImmutable $created_at = null;
@@ -37,21 +34,13 @@ class Alert
     #[ORM\JoinColumn(nullable: false)]
     private ?Waterbody $waterbody = null;
 
+    #[ORM\ManyToOne(inversedBy: 'alerts')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?ToxicityLevel $toxicity_level = null;
+
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getToxicityAlert(): ?string
-    {
-        return $this->toxicity_alert;
-    }
-
-    public function setToxicityAlert(string $toxicity_alert): static
-    {
-        $this->toxicity_alert = $toxicity_alert;
-
-        return $this;
     }
 
     public function getCreatedAt(): ?\DateTimeImmutable
@@ -62,7 +51,7 @@ class Alert
     #[ORM\PrePersist]
     public function setCreatedAt(): static
     {
-        $this->created_at = new DateTimeImmutable();
+        $this->created_at = new \DateTimeImmutable();
 
         return $this;
     }
@@ -76,7 +65,7 @@ class Alert
     #[ORM\PreUpdate]
     public function setUpdatedAt(): static
     {
-        $this->updated_at = new DateTimeImmutable();
+        $this->updated_at = new \DateTimeImmutable();
 
         return $this;
     }
@@ -125,6 +114,18 @@ class Alert
     public function setWaterbody(?Waterbody $waterbody): static
     {
         $this->waterbody = $waterbody;
+
+        return $this;
+    }
+
+    public function getToxicityLevel(): ?ToxicityLevel
+    {
+        return $this->toxicity_level;
+    }
+
+    public function setToxicityLevel(?ToxicityLevel $toxicity_level): static
+    {
+        $this->toxicity_level = $toxicity_level;
 
         return $this;
     }
