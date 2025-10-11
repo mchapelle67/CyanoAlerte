@@ -34,7 +34,7 @@ class Alert
     #[ORM\JoinColumn(nullable: false)]
     private ?Waterbody $waterbody = null;
 
-    #[ORM\ManyToOne(inversedBy: 'alerts')]
+    #[ORM\ManyToOne(targetEntity: ToxicityLevel::class,inversedBy: 'alerts')]
     #[ORM\JoinColumn(nullable: false)]
     private ?ToxicityLevel $toxicity_level = null;
 

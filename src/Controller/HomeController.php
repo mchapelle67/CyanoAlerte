@@ -14,8 +14,8 @@ final class HomeController extends AbstractController
     #[Route('/', name: 'app_home')]
     public function index(FormService $formService, Request $request): Response
     {
+        $form = $formService->createAlertForm();
         $result = $formService->handleAlertForm($request);
-        $alertForm = $result['form']->createView();
         
         if ($result['success']) {
             $this->addFlash('success', $result['message']);
@@ -26,8 +26,7 @@ final class HomeController extends AbstractController
 
         return $this->render('home/index.html.twig', [
             'controller_name' => 'HomeController',
-            'alert_form' => $alertForm
-
+            'alert_form' => $form->createView()
         ]);
     }
 }

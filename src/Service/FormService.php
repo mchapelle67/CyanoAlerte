@@ -5,6 +5,7 @@ namespace App\Service;
 use App\Entity\Alert;
 use App\Form\AlertTypeForm;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\FormFactoryInterface;
 
@@ -23,13 +24,19 @@ class FormService
         $this->entityManager = $entityManager;
     }
 
-    public function handleAlertForm(Request $request): array
+    public function createAlertForm(): FormInterface 
     {
         $alert = new Alert();
-        $form = $this->formFactory->create(AlertTypeForm::class, $alert);
+        return $this->formFactory->create(AlertTypeForm::class, $alert);
+    }
+    
+    public function handleAlertForm(Request $request): array
+    {
+        $form = $this->createAlertForm();
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $alert = $form->getData();
             $this->entityManager->persist($alert);
             $this->entityManager->flush();
 
@@ -38,11 +45,12 @@ class FormService
                 'alert' => $alert,
                 'message' => 'Votre signalement a bien été pris en compte.'
             ];
+        } else { 
+            return [
+                'success' => false,
+                'form' => $form,
+                'message' => "Votre signalement a rencontré une erreur. Veuillez nous contacter si l'erreur persiste."
+                ];
         }
-       return [
-        'success' => false,
-        'form' => $form,
-        'message' => "Votre signalement a rencontré une erreur. Veuillez nous contacter si l'erreur persiste."
-        ];
     }
 }

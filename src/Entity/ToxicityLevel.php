@@ -15,8 +15,8 @@ class ToxicityLevel
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 30)]
-    private ?string $level = null;
+    #[ORM\Column]
+    private ?int $level = null;
 
     /**
      * @var Collection<int, Alert>
@@ -34,12 +34,12 @@ class ToxicityLevel
         return $this->id;
     }
 
-    public function getLevel(): ?string
+    public function getLevel(): ?int
     {
         return $this->level;
     }
 
-    public function setLevel(string $level): static
+    public function setLevel(int $level): static
     {
         $this->level = $level;
 
