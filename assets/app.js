@@ -1,6 +1,8 @@
 import './bootstrap.js';
 import './styles/app.css';
 import '@tailwindplus/elements';
+import 'flowbite';
+
 import './js/map.js';
 
 /*

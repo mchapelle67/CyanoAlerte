@@ -23,7 +23,7 @@ class AlertTypeForm extends AbstractType
             ])
             ->add('description', TextType::class, [
                 'required' => false, 
-                'label' => "Description", 
+                'label' => "Description des symptômes", 
                 'attr' => [
                     'rows' => 3
                 ]
@@ -32,7 +32,7 @@ class AlertTypeForm extends AbstractType
             ->add('toxicity_level', EntityType::class, [     
                 'class' => ToxicityLevel::class,    
                 'choice_label' => 'level',          
-                'label' => "Niveau de toxicité"
+                'label' => "Niveau de suspicion"
             ])
             ->add('submit', SubmitType::class, [
                 'label' => "Envoyer l'alerte",
