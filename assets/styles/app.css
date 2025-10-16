@@ -1,16 +1,19 @@
-/*  
-Texte → rem ou clamp()
-Layout → %, fr, vh/vw
-Espacements → rem / em
-Images → % + auto
-Éléments fixes (bordures fines, icônes) → px
-*/
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @import './pages/home.css';
 @import './components/_navbar.css';
+
+@layer base {
+  :root {
+    --gradient: linear-gradient(0.25turn, #2c5df1, rgb(52, 150, 108));
+  }
+  
+  nav, button, h1, h2, h3, h4, h5, h6 {
+    font-family: theme('fontFamily.display');
+  }
+}
 
 @font-face {
     font-family: 'Montserrat';
@@ -28,68 +31,24 @@ Images → % + auto
 }
 
 @font-face {
-    font-family: 'Roboto';
-    src: url('../fonts/Roboto/Roboto-VariableFont_wdth,wght.ttf') format('truetype-variations');
-    font-weight: 300 900;
-    font-stretch: 75% 100%;
+    font-family: 'Inter';
+    src: url('../fonts/Inter/Inter-VariableFont_opsz,wght.ttf') format('truetype-variations');
+    font-weight: 100 900;
     font-display: swap;
 }
 
 @font-face {
-    font-family: 'Roboto';
-    src: url('../fonts/Roboto/Roboto-Italic-VariableFont_wdth,wght.ttf') format('truetype-variations');
-    font-weight: 300 900;
-    font-stretch: 75% 100%;
+    font-family: 'Inter';
+    src: url('../fonts/Inter/Inter-Italic-VariableFont_opsz,wght.ttf') format('truetype-variations');
+    font-weight: 100 900;
     font-style: italic;
     font-display: swap;
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    transition: all 0.3s ease-in-out;
-}
-
-body {
-  background-color: white;
-  font-family: var(--font-primary);
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-img {
-  vertical-align: top;
-  max-width: 100%;
-  height: auto;
-}
-
-
-:root {
-    --gradient: linear-gradient(0.25turn, #2c5df1, rgb(52, 150, 108));
-    --font-primary: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    --font-secondary: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-}
-
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-secondary); 
-  font-weight: 600;
-  line-height: 1.2;
-  margin-bottom: 1rem;
-}
-
-h1 { font-size: 2.5rem; font-weight: 700; }
-h2 { font-size: 2rem; font-weight: 600; }
-h3 { font-size: 1.5rem; font-weight: 600; }
-
-
-.font-title { font-family: var(--font-secondary); }
-.font-body { font-family: var(--font-primary); }
-.font-mono { font-family: var(--font-mono); }
-
-label.required:before {
+label.required:after {
+    margin-left: 0.2rem;
     content: "*";
 }
 
+/* text green : green-800 */
+/* text gray : gray-600 */

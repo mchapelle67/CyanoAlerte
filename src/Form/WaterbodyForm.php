@@ -19,6 +19,9 @@ class WaterbodyForm extends AbstractType
             ->add('name', TextType::class, [
                 'label' => "Nom du plan d'eau"
             ])
+            ->add('city', TextType::class, [
+                'label' => "Localisation"
+            ])
             ->add('type', EntityType::class, [     
                 'class' => WaterbodyType::class,    
                 'choice_label' => 'type',          

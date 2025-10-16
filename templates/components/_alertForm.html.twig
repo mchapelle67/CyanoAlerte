@@ -7,17 +7,17 @@
 
 <!-- Main modal -->
 <div id="crud-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-    <div class="relative p-4 w-full max-w-md max-h-full">
+    <div class="relative p-4 w-full max-w-2xl max-h-full">
         <!-- Modal content -->
         <div class="relative bg-white rounded-lg shadow-sm">
             <!-- Modal header -->
             <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
                 <div class="flex flex-col">
-                    <h3 class="flex items-center gap-2 text-xl mb-0 font-normal text-custom-primary-green">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" class="w-7 h-7"><!--!Font Awesome Free v7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path fill="#2c6536" d="M128 252.6C128 148.4 214 64 320 64C426 64 512 148.4 512 252.6C512 371.9 391.8 514.9 341.6 569.4C329.8 582.2 310.1 582.2 298.3 569.4C248.1 514.9 127.9 371.9 127.9 252.6zM320 320C355.3 320 384 291.3 384 256C384 220.7 355.3 192 320 192C284.7 192 256 220.7 256 256C256 291.3 284.7 320 320 320z"/></svg>                
+                    <h3 class="flex items-center gap-2 text-lg mb-0 font-medium text-green-800">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" class="w-7 h-7"><!--!Font Awesome Free v7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path fill="#166534" d="M128 252.6C128 148.4 214 64 320 64C426 64 512 148.4 512 252.6C512 371.9 391.8 514.9 341.6 569.4C329.8 582.2 310.1 582.2 298.3 569.4C248.1 514.9 127.9 371.9 127.9 252.6zM320 320C355.3 320 384 291.3 384 256C384 220.7 355.3 192 320 192C284.7 192 256 220.7 256 256C256 291.3 284.7 320 320 320z"/></svg>                
                         Nouvelle alerte 
                     </h3>
-                    <span class="text-gray-600 font-medium mt-2">
+                    <span class="text-gray-500 text-base mt-2">
                         Position: test4567, test5678 
                     </span>
                 </div>
@@ -30,29 +30,46 @@
             </div>
             <!-- Modal body -->
             {{ form_start(alert_form) }}
-          <div class="py-8 px-4 mx-auto max-w-2xl lg:py-16">
-              <div class="sm:col-span-2">
-                  {{ form_row(alert_form.waterbody.name) }}
-              </div>
-              <div class="w-full">
-                    {{ form_row(alert_form.waterbody.type) }}
-              </div>
-              <div class="w-full">
-                  {{ form_row(alert_form.toxicity_level) }}
-              </div>
-              <div class="w-full">
-                    {{ form_row(alert_form.description) }}
-              </div>
-              <div class="w-full">
-                    {{ form_row(alert_form.source) }}
-              </div>
-          </div>
-          <div>
-            <button type="submit" class="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800">
-                Annuler
-            </button>
-                {{ form_row(alert_form.submit) }}
-          </div>
+            <div class="py-6 px-6">
+                <div class="flex gap-4 mb-4">
+                    <div class="flex-1 flex flex-col">
+                        {{ form_label(alert_form.waterbody.name, null, {'label_attr': {'class': 'font-semibold mb-2'}}) }}
+                        {{ form_widget(alert_form.waterbody.name) }}
+                        {{ form_errors(alert_form.waterbody.name) }}
+                    </div>
+                    <div class="flex-1 flex flex-col">
+                        {{ form_label(alert_form.waterbody.type, null, {'label_attr': {'class': 'font-semibold mb-2'}}) }}
+                        {{ form_widget(alert_form.waterbody.type) }}
+                        {{ form_errors(alert_form.waterbody.type) }}
+                    </div>
+                </div>
+                <div class="mb-4 flex flex-col">
+                    {{ form_label(alert_form.waterbody.city, null, {'label_attr': {'class': 'font-semibold mb-2'}}) }}
+                    {{ form_widget(alert_form.waterbody.city) }}
+                    {{ form_errors(alert_form.waterbody.city) }}
+                </div>
+                <div class="mb-4 flex flex-col">
+                    {{ form_label(alert_form.toxicity_level, null, {'label_attr': {'class': 'font-semibold mb-2'}}) }}
+                    {{ form_widget(alert_form.toxicity_level) }}
+                    {{ form_errors(alert_form.toxicity_level) }}
+                </div>
+                <div class="mb-4 flex flex-col">
+                    {{ form_label(alert_form.description, null, {'label_attr': {'class': 'font-semibold mb-2'}}) }}
+                    {{ form_widget(alert_form.description) }}
+                    {{ form_errors(alert_form.description) }}
+                </div>                
+                <div class="mb-6 flex flex-col">
+                    {{ form_label(alert_form.source, null, {'label_attr': {'class': 'font-semibold mb-2'}}) }}
+                    {{ form_widget(alert_form.source) }}
+                    {{ form_errors(alert_form.source) }}
+                </div>
+                <div class="flex items-center justify-around">
+                    <button type="submit" class="">
+                    Annuler
+                    </button>
+                    {{ form_row(alert_form.submit, {'row_attr': {'class': ''}}) }}
+                </div>
+            </div>
         {{ form_end(alert_form) }}
         </div>
     </div>
