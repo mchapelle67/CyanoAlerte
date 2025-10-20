@@ -11,4 +11,4 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // on ajoute un marqueur (centré sur la France)
     window.marker = L.marker([46.603354, 1.888334]).addTo(window.map);
-});   
+});

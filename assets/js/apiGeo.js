@@ -23,10 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Fonction pour mettre à jour le marqueur
     function updateMarker(city) {
         if (!window.marker || !window.map) {
-            handleError(
-                new Error('Carte non initialisée'),
-                'La carte n\'est pas encore chargée. Veuillez rafraîchir la page.'
-            );
+            errorMsg.textContent = 'Veuillez rafraîchir la page.';
             return;
         }
 
