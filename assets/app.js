@@ -4,6 +4,7 @@ import '@tailwindplus/elements';
 import 'flowbite';
 
 import './js/map.js';
+import './js/apiGeo.js';
 
 /*
  * Welcome to your app's main JavaScript file!

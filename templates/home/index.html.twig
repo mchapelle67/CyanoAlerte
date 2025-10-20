@@ -10,10 +10,12 @@
 <main>
     <h1></h1>
     <section>
-        {# <div id="map"></div> #}
+        <div id="map"></div>
     </section>
     <section>
-        {{ include('components/_alertForm.html.twig') }}
+        <input type="text" class="city" name="city" id="city" placeholder="Saisir une ville...">
+            <ul id="cityResults"></ul>
+        {# {{ include('components/_alertForm.html.twig') }} #}
     </section>
 </main>
 
