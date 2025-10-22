@@ -13,11 +13,46 @@
         Signalez et consultez les alertes de cyanobactéries dans les lacs, rivières et étangs.<br>
         Aidez à protéger la santé publique et l'environnement aquatique.
     </p>
-    <section>
-
+    <section class="pb-4">
+        <div class="p-5 m-5 bg-white rounded-lg shadow-lg">
+            <div>
+    
+            </div>
+            <div>
+                <h3 class="text-xl mb-1">Alertes actives</h3>
+                <span>signalements en cours</span>
+            </div>
+        </div>
+        <div class="p-5 m-5 bg-white rounded-lg shadow-lg">
+            <div>
+    
+            </div>
+            <div>
+                <h3 class="text-xl mb-1">Zones surveillées</h3>
+                <span>départements couverts</span>
+            </div>
+        </div>
+        <div class="p-5 m-5 bg-white rounded-lg shadow-lg ">
+            <div>
+    
+            </div>
+            <div>
+                <h3 class="text-xl mb-1">Niveau élevé</h3>
+                <span>alertes prioritaires</span>
+            </div>
+        </div>
+        <div class="p-5 m-5 bg-white rounded-lg shadow-lg ">
+            <div>
+    
+            </div>
+            <div>
+                <h3 class="text-xl mb-1">Nouveaux signalements</h3>
+                <span>cette semaine</span>
+            </div>
+        </div>
     </section>
-    <section class="px-10 pt-3 flex gap-6">
-        <div class="w-[60%] bg-white rounded-lg shadow-lg overflow-hidden relative">
+    <div class="px-10 pt-3 flex gap-6">
+        <section class="w-[60%] bg-white rounded-lg shadow-lg overflow-hidden relative">
             <div id="map" class="w-full h-[600px]" style="cursor: crosshair;"></div>
             <div class="absolute top-4 right-4 bg-white p-3 rounded shadow-md text-sm z-[1000]">
                 <p class="font-semibold mb-2">Légende</p>
@@ -37,17 +72,26 @@
                 </div>
             </div>
             <p class="absolute bottom-4 left-4 bg-white/90 p-4 text-gray-600 rounded-2xl shadow-md text-medium z-[1000]">
-                💡 <strong>Cliquez sur la carte</strong> pour signaler une nouvelle zone
+                💡 <strong>Cliquez sur la carte</strong> pour signaler une suspicion de cyanobactéries
             </p>
-        </div>
-        <div class="w-[40%] p-5 bg-white rounded-lg shadow-lg">
-            <h2>Rechercher alertes par region</h2>
-            <input type="text" class="city w-full p-2 border rounded" name="city" id="city" placeholder="Saisir une ville...">
-            <ul id="cityResults" class="mt-2"></ul>
-            <h2>Dernières alertes</h2>
-            {# {{ include('components/_alertForm.html.twig') }} #}
-        </div>
-    </section>
+        </section>
+        <section class="w-[40%] m-5">
+            <div class="p-5 bg-white rounded-lg shadow-lg mb-4">
+                <h2 class="text-2xl text-green-800 mb-4">Rechercher par zone</h2>
+                <input type="text" class="city w-full p-2 rounded border-gray-300 focus:border-blue-300" name="city" id="city" placeholder="Saisir une ville ou un département...">                    
+                    <ul id="cityResults" class="mt-2"></ul>
+            </div>
+            <div class="p-5 bg-white rounded-lg shadow-lg">
+                <div class="flex justify-around pt-2"> 
+                    <h2 class="text-2xl text-center flex items-center text-green-800">Nouvelle alerte</h2>
+                    {{ include('components/_alertForm.html.twig') }}
+                    </div>
+                    <p class="text-center text-gray-600 py-6">
+                        Signalez une suspision de cyanobactéries en remplissant le formulaire ou en cliquant directement sur la carte.
+                    </p>
+            </div>
+        </section>
+    </div>
 </main>
 
 {% endblock %}
