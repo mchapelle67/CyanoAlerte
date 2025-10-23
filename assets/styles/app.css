@@ -2,8 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-@import './pages/home.css';
-@import './components/_navbar.css';
+@import './components/components.css';
+@import './components/effects.css';
 
 @layer base {
   :root {
@@ -45,11 +45,7 @@
     font-display: swap;
 }
 
-label.required:after {
-    margin-left: 0.2rem;
-    content: "*";
-}
-
 /* text green : green-800 */
 /* text gray : gray-600 */
 /* element: blue-700 */
+

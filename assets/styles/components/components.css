@@ -1,21 +1,19 @@
-/* État de base - on prépare le gradient mais invisible */
+/* NAV */
 .nav-gradient,
 .nav-login {
     position: relative;
     background: var(--gradient);
     background-clip: text;
     -webkit-background-clip: text;
-    -webkit-text-fill-color: rgb(115, 115, 115); /* Couleur normale visible */
+    -webkit-text-fill-color: rgb(115, 115, 115); 
     transition: -webkit-text-fill-color 0.3s ease;
 }
 
-/* Au hover - on révèle le gradient */
 .nav-gradient:hover,
 .nav-login:hover {
-    -webkit-text-fill-color: transparent; /* Révèle le gradient */
+    -webkit-text-fill-color: transparent; 
 }
 
-/* Underline animé pour nav-login */
 .nav-login::after {    
   content: "";
   position: absolute;
@@ -30,5 +28,11 @@
 .nav-login:hover::after { 
   width: 100%; 
   left: 0; 
+}
+
+/*  FORM  */
+label.required:after {
+    margin-left: 0.2rem;
+    content: "*";
 }
 
