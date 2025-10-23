@@ -8,7 +8,4 @@ document.addEventListener('DOMContentLoaded', function() {
         maxZoom: 19,
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(window.map);
-
-    // on ajoute un marqueur (centré sur la France)
-    window.marker = L.marker([46.603354, 1.888334]).addTo(window.map);
 });
