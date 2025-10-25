@@ -5,11 +5,12 @@ namespace App\Form;
 use App\Entity\Waterbody;
 use App\Entity\WaterbodyType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\FormTypeInterface;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 class WaterbodyForm extends AbstractType
 {
@@ -20,8 +21,10 @@ class WaterbodyForm extends AbstractType
                 'label' => "Nom du plan d'eau"
             ])
             ->add('city', TextType::class, [
-                'label' => "Localisation"
+                'label' => "Commune"
             ])
+            ->add('latitude', HiddenType::class)
+            ->add('longitude', HiddenType::class)
             ->add('type', EntityType::class, [     
                 'class' => WaterbodyType::class,    
                 'choice_label' => 'type',          

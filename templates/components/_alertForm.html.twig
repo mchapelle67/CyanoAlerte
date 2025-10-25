@@ -13,12 +13,17 @@
             <!-- Modal header -->
             <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
                 <div class="flex flex-col">
+                {{ form_start(alert_form) }}
                     <h3 class="flex items-center gap-2 text-lg mb-0 font-medium text-green-800">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" class="w-7 h-7"><!--!Font Awesome Free v7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path fill="#166534" d="M128 252.6C128 148.4 214 64 320 64C426 64 512 148.4 512 252.6C512 371.9 391.8 514.9 341.6 569.4C329.8 582.2 310.1 582.2 298.3 569.4C248.1 514.9 127.9 371.9 127.9 252.6zM320 320C355.3 320 384 291.3 384 256C384 220.7 355.3 192 320 192C284.7 192 256 220.7 256 256C256 291.3 284.7 320 320 320z"/></svg>                
                         Nouvelle alerte 
                     </h3>
-                    <span class="text-gray-500 text-base mt-2">
-                        Position: test4567, test5678 
+                    <span class="text-gray-500 text-base mt-3">
+                        Position:
+                        <span id="position-display"></span>
+                        <span id="custom-text">{{ texte_personnalise|default('non renseigné') }}</span>
+                        {{ form_row(alert_form.waterbody.longitude) }}
+                        {{ form_row(alert_form.waterbody.latitude) }}
                     </span>
                 </div>
                 <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="crud-modal">
@@ -29,8 +34,6 @@
                 </button>
             </div>
             <!-- Modal body -->
-            {{ form_start(alert_form) }}
-
             <div class="py-6 px-6">
                 <div class="flex gap-4 mb-4">
                     <div class="flex-1 flex flex-col">
@@ -65,14 +68,11 @@
                     {{ form_errors(alert_form.source) }}
                 </div>
                 <div class="flex items-center justify-around">
-                    <button type="submit" class="">
-                    Annuler
-                    </button>
                     {{ form_row(alert_form.submit, {'row_attr': {'class': ''}}) }}
                 </div>
             </div>
         {{ form_end(alert_form) }}
         </div>
     </div>
-</div> 
+</div>
 
