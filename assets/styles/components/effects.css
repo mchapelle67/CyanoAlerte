@@ -1,25 +1,8 @@
 .btn-hover-effect {
-  transition-duration: 300ms;
-  transition-property: transform;
-}
-.btn-hover-effect::before {
-  pointer-events: none;
-  position: absolute;
-  z-index: -1;
-  content: '';
-  top: 100%;
-  left: 5%;
-  height: 10px;
-  width: 90%;
-  opacity: 0;
-  background: linear-gradient(to right, rgba(37,99,235,1), rgba(22,163,74,1));
-  transition-duration: 300ms;
-  transition-property: transform, opacity;
-}
-.btn-hover-effect:hover {
-  transform: translateY(-5px);
-}
-.btn-hover-effect:hover::before {
-  opacity: 1;
-  transform: translateY(5px);
+  transition: 0.5s;
+  background-size: 130% auto;
+ }
+
+ .btn-hover-effect:hover {
+  background-position: right center;
 }

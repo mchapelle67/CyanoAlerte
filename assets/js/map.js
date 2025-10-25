@@ -8,4 +8,24 @@ document.addEventListener('DOMContentLoaded', function() {
         maxZoom: 19,
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(window.map);
+
+    
+    // on ajoute l'évenement qui permettra de récupérer la localisation au click
+    function clickPosition(event){
+        if (event) {
+            console.log(event.latlng.lat);
+            console.log(event.latlng.lng);
+            // ouvre le formulaire d'alerte
+            const modal = document.getElementById('crud-modal');
+            if (modal) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+                modal.setAttribute('aria-hidden', 'false');
+            }
+        } else {
+            console.log('Non définis');
+        }
+    } 
+
+    map.on('click', clickPosition);
 });
