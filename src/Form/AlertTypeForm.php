@@ -11,21 +11,19 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class AlertTypeForm extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('source', TextType::class, [
-                'required' => false,
-                'label' => "Source de l'information"
-            ])
-            ->add('description', TextType::class, [
+            ->add('description', TextareaType::class, [
                 'required' => false, 
                 'label' => "Description des symptômes", 
                 'attr' => [
-                    'rows' => 3
+                    'rows' => 4, 
+                    'placeholder' => "Décrivez ce que vous avez observé: couleur de l'eau, présence d'écume, odeur, mortalisé de poisson..."
                 ]
             ])
             ->add('waterbody', WaterbodyForm::class)
@@ -35,7 +33,7 @@ class AlertTypeForm extends AbstractType
                 'label' => "Niveau de suspicion"
             ])
             ->add('submit', SubmitType::class, [
-                'label' => "Envoyer l'alerte",
+                'label' => "Signaler",
             ])
         ;
     }

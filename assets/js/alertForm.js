@@ -4,17 +4,20 @@ document.addEventListener('DOMContentLoaded', function() {
         if (event && event.latlng) {
             let lat = event.latlng.lat;
             let lng = event.latlng.lng;
+
             // Affiche la position dans le span
             const positionSpan = document.getElementById('position-display');
             if (positionSpan) {
                 positionSpan.textContent = lat + ', ' + lng;
                 document.getElementById('custom-text').style.display = 'none';
             }
+        
             // Remplit les inputs cachés
-            const latForm = document.getElementById('latitude');
-            const lngForm = document.getElementById('longitude');
+            const latForm = document.getElementById('alert_type_form_waterbody_latitude');
+            const lngForm = document.getElementById('alert_type_form_waterbody_longitude');
             if (latForm) latForm.value = lat;
             if (lngForm) lngForm.value = lng;
+
             // Ouvre le formulaire d'alerte
             const modal = document.getElementById('crud-modal');
             if (modal) {
@@ -29,12 +32,12 @@ document.addEventListener('DOMContentLoaded', function() {
     // remettre la position à zéro qd on quitte le form sans l'envoyer
     function resetAlertFormPosition() {
         const positionSpan = document.getElementById('position-display');
-        if (positionSpan) positionSpan.textContent = '';
         const customText = document.getElementById('custom-text');
+        if (positionSpan) positionSpan.textContent = '';
         if (customText) customText.style.display = '';
     }
 
-    // Ajout d'un écouteur sur le bouton de fermeture
+    // ajout d'un écouteur sur le bouton de fermeture
     const modal = document.getElementById('crud-modal');
     if (modal) {
         const closeBtn = modal.querySelector('[data-modal-toggle]');
@@ -44,6 +47,4 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     map.on('click', setAlertFormPosition);
-
-
 });

@@ -11,7 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 final class HomeController extends AbstractController 
 {
-    #[Route('/', name: 'app_home')]
+    #[Route('/cyanoalerte/accueil', name: 'app_home')]
     public function index(FormService $formService, Request $request): Response
     {
         $form = $formService->createAlertForm();

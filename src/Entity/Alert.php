@@ -24,8 +24,6 @@ class Alert
     #[ORM\Column]
     private ?bool $is_verified = false;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $source = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
@@ -78,18 +76,6 @@ class Alert
     public function setIsVerified(bool $is_verified): static
     {
         $this->is_verified = $is_verified;
-
-        return $this;
-    }
-
-    public function getSource(): ?string
-    {
-        return $this->source;
-    }
-
-    public function setSource(?string $source): static
-    {
-        $this->source = $source;
 
         return $this;
     }

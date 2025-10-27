@@ -25,13 +25,10 @@ class Waterbody
     private ?string $longitude = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $region = null;
+    private ?string $department = null;
 
     #[ORM\Column(length: 255)]
     private ?string $city = null;
-
-    #[ORM\Column(length: 30)]
-    private ?string $postal_code = null;
 
     #[ORM\ManyToOne(inversedBy: 'waterbodies')]
     #[ORM\JoinColumn(nullable: false)]
@@ -89,14 +86,14 @@ class Waterbody
         return $this;
     }
 
-    public function getRegion(): ?string
+    public function getDepartment(): ?string
     {
-        return $this->region;
+        return $this->department;
     }
 
-    public function setRegion(string $region): static
+    public function setDepartment(string $department): static
     {
-        $this->region = $region;
+        $this->department = $department;
 
         return $this;
     }
@@ -109,18 +106,6 @@ class Waterbody
     public function setCity(string $city): static
     {
         $this->city = $city;
-
-        return $this;
-    }
-
-    public function getPostalCode(): ?string
-    {
-        return $this->postal_code;
-    }
-
-    public function setPostalCode(string $postal_code): static
-    {
-        $this->postal_code = $postal_code;
 
         return $this;
     }

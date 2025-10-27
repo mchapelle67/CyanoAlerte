@@ -18,10 +18,16 @@ class WaterbodyForm extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
-                'label' => "Nom du plan d'eau"
+                'label' => "Nom du plan d'eau",
+                'attr' => [
+                    'placeholder' => 'ex: Lac de Kruth'
+                ]
             ])
             ->add('city', TextType::class, [
-                'label' => "Commune"
+                'label' => "Localisation", 
+                'attr' => [
+                    'placeholder' => 'ex: Paris'
+                ]
             ])
             ->add('latitude', HiddenType::class)
             ->add('longitude', HiddenType::class)
