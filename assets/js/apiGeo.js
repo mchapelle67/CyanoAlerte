@@ -46,7 +46,43 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 }
 
-    // Cache la liste des résultats si on clique ailleurs
+    // fonction de géocodage inversé : récupère la ville et le département depuis les coordonnées GPS
+    async function getCityFromCoordinates(lat, lon) {
+        // async function et await remplace fetch et .then 
+        try {
+            const url = `https://geo.api.gouv.fr/communes?lat=${lat}&lon=${lon}&fields=nom,code,codeDepartement,departement&format=json`;            
+            const response = await fetch(url);
+            
+            if (!response.ok) {
+                throw new Error(`Erreur HTTP : ${response.status}`);
+            }
+            
+            const communes = await response.json();
+            
+            if (communes.length > 0) {
+                const commune = communes[0];
+                console.log('Commune:', commune);
+                console.log('Département:', commune.departement);
+                
+                return {
+                    ville: commune.nom,
+                    codeDepartement: commune.codeDepartement,
+                    departement: commune.departement ? commune.departement.nom : commune.codeDepartement || null
+                };
+            } else {
+                throw new Error('Aucune commune trouvée pour ces coordonnées.');
+            }
+        } catch (error) {
+            console.error('Erreur lors du géocodage inversé:', error);
+            handleError(error, 'Impossible de trouver la ville pour ces coordonnées.');
+            return null;
+        }
+    }
+
+    // exposer la fonction globalement pour l'utiliser dans d'autres fichiers JS
+    window.getCityFromCoordinates = getCityFromCoordinates;
+
+    // cache la liste des résultats si on clique ailleurs
     document.addEventListener('click', (e) => {
         if (!inputZone.contains(e.target) && !resultsList.contains(e.target)) {
             resultsList.classList.add('hidden');

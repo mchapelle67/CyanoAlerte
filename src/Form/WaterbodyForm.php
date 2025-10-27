@@ -31,6 +31,7 @@ class WaterbodyForm extends AbstractType
             ])
             ->add('latitude', HiddenType::class)
             ->add('longitude', HiddenType::class)
+            ->add('department', HiddenType::class)
             ->add('type', EntityType::class, [     
                 'class' => WaterbodyType::class,    
                 'choice_label' => 'type',          
