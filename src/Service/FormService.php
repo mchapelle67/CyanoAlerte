@@ -45,12 +45,19 @@ class FormService
                 'alert' => $alert,
                 'message' => 'Votre signalement a bien été pris en compte.'
             ];
-        } else { 
+        } elseif ($form->isSubmitted() && !$form->isValid()) {
             return [
                 'success' => false,
                 'form' => $form,
                 'message' => "Votre signalement a rencontré une erreur. Veuillez nous contacter si l'erreur persiste."
-                ];
+            ];
         }
+        
+        // Formulaire non soumis
+        return [
+            'success' => false,
+            'form' => $form,
+            'message' => null
+        ];
     }
 }

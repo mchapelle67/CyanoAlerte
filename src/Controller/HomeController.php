@@ -20,8 +20,9 @@ final class HomeController extends AbstractController
         if ($result['success']) {
             $this->addFlash('success', $result['message']);
             return $this->redirectToRoute('app_home');
-        } else {
+        } elseif ($result['message']) {
             $this->addFlash('error', $result['message']);
+            return $this->redirectToRoute('app_home');
         }
 
         return $this->render('home/index.html.twig', [

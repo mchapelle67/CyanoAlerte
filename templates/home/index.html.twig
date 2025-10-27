@@ -13,6 +13,18 @@
         Signalez et consultez les alertes de cyanobactéries dans les lacs, rivières et étangs.<br>
         Aidez à protéger la santé publique et l'environnement aquatique.
     </p>
+    <div class="z-50 space-y-2">
+        {% for type, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="alert alert-{{ type }} bg-{{ type == 'success' ? 'green' : 'red' }}-100 border border-{{ type == 'success' ? 'green' : 'red' }}-400 text-{{ type == 'success' ? 'green' : 'red' }}-700 px-4 py-3 rounded relative shadow-lg flex items-center justify-between min-w-[300px] max-w-[500px] animate-slide-in" role="alert">
+                    <span class="block sm:inline">{{ message }}</span>
+                    <button type="button" class="ml-4 text-{{ type == 'success' ? 'green' : 'red' }}-700 hover:text-{{ type == 'success' ? 'green' : 'red' }}-900 font-bold text-xl leading-none" onclick="this.parentElement.remove()">
+                        ×
+                    </button>
+                </div>
+            {% endfor %}
+        {% endfor %}
+    </div>
     {# <section class="pb-4 flex w-full">
         <div class="p-5 m-5 bg-white rounded-lg shadow-lg">
             <div>
