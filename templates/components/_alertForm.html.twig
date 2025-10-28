@@ -48,6 +48,10 @@
                     </div>
                 </div>
                 <div class="mb-4 flex flex-col">
+
+                <input type="text" class="w-full p-2 rounded border-gray-300 focus:border-blue-300 placeholder-gray-400" name="zone" id="cityInput" placeholder="Saisir une ville ou un département...">                    
+                    <ul id="cityResults" class="mt-2"></ul>
+
                     {{ form_label(alert_form.waterbody.city, null, {'label_attr': {'class': 'font-medium mb-2'}}) }}
                     {{ form_widget(alert_form.waterbody.city, {'attr': {'class': 'bg-gray-50 w-full p-2 rounded border border-gray-300 focus:border-blue-300 focus:ring focus:ring-blue-200 placeholder-gray-400'}}) }}
                     {{ form_errors(alert_form.waterbody.city) }}
