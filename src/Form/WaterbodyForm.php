@@ -23,12 +23,7 @@ class WaterbodyForm extends AbstractType
                     'placeholder' => 'ex: Lac de Kruth'
                 ]
             ])
-            ->add('city', TextType::class, [
-                'label' => "Localisation", 
-                'attr' => [
-                    'placeholder' => 'ex: Paris'
-                ]
-            ])
+            ->add('city', HiddenType::class)
             ->add('latitude', HiddenType::class)
             ->add('longitude', HiddenType::class)
             ->add('department', HiddenType::class)

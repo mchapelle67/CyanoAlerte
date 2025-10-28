@@ -2,7 +2,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     const inputZone = document.querySelector('.zone');
     const resultsList = document.querySelector('#zoneResults');
-    const inputCity = document.querySelector('#cityInput');
+    const inputCity = document.querySelector('#alert_type_form_waterbody_city');
     const resultsCity = document.querySelector('#cityResults');
 
     // ============== FONCTIONS UTILITAIRES ==============
