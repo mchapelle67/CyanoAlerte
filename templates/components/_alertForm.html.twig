@@ -65,6 +65,11 @@
                     {{ form_widget(alert_form.description, {'attr': {'class': 'bg-gray-50 w-full p-2 rounded border border-gray-300 focus:border-blue-300 focus:ring focus:ring-blue-200 placeholder-gray-400'}}) }}
                     {{ form_errors(alert_form.description) }}
                 </div>                
+                <div class="mb-4 flex flex-col">
+                    {{ form_label(alert_form.email, null, {'label_attr': {'class': 'font-medium mb-2'}}) }}
+                    {{ form_widget(alert_form.email, {'attr': {'class': 'bg-gray-50 w-full p-2 rounded border border-gray-300 focus:border-blue-300 focus:ring focus:ring-blue-200 placeholder-gray-400'}}) }}
+                    {{ form_errors(alert_form.email) }}
+                </div>                
                 <div class="flex items-center justify-around">
                     {{ form_row(alert_form.submit, {'attr': {'class':'btn-hover-effect text-white bg-custom-gradient font-medium rounded-lg text-xl px-9 py-2 w-fit text-center mt-2' }}) }}
                 </div>

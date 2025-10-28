@@ -36,6 +36,9 @@ class Alert
     #[ORM\JoinColumn(nullable: false)]
     private ?ToxicityLevel $toxicity_level = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $email = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -112,6 +115,18 @@ class Alert
     public function setToxicityLevel(?ToxicityLevel $toxicity_level): static
     {
         $this->toxicity_level = $toxicity_level;
+
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): static
+    {
+        $this->email = $email;
 
         return $this;
     }

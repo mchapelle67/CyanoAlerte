@@ -9,7 +9,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
@@ -24,6 +24,12 @@ class AlertTypeForm extends AbstractType
                 'attr' => [
                     'rows' => 4, 
                     'placeholder' => "Décrivez ce que vous avez observé: couleur de l'eau, présence d'écume, odeur, mortalisé de poisson..."
+                ]
+            ])
+            ->add('email', EmailType::class, [
+                'label' => "Email", 
+                'attr' => [
+                    'placeholder' => "ex: email@email.com"
                 ]
             ])
             ->add('waterbody', WaterbodyForm::class)
