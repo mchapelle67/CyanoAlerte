@@ -16,24 +16,36 @@ document.addEventListener('DOMContentLoaded', function() {
             openModal();
 
             // récupère la ville et le département en arrière-plan (asynchrone)
-            if (window.getCityFromCoordinates) {
-                const cityInput = document.getElementById('alert_type_form_waterbody_city');
+            if (window.getCityFromCoordinates) {                
+                const citySearchInput = document.getElementById('citySearchInput'); // Input manuel autocomplete
+                const cityFormInput = document.querySelector('[name="alert_type_form[waterbody][city]"]'); // Vrai champ Symfony
                 const depInput = document.getElementById('alert_type_form_waterbody_department');
 
-                if (cityInput) {
-                    cityInput.value = 'Chargement...';
+
+                if (citySearchInput) {
+                    citySearchInput.value = 'Chargement...';
                 }
                 
-                const cityData = await window.getCityFromCoordinates(lat, lng);
-                if (cityData && cityInput) {
+                const cityData = await window.getCityFromCoordinates(lat, lng);                
+                if (cityData) {
                     if (cityData.ville) {
-                        cityInput.value = cityData.ville;
+                        console.log('Remplissage ville:', cityData.ville);
+                        // Remplit l'input de recherche visible
+                        if (citySearchInput) {
+                            citySearchInput.value = cityData.ville;
+                        }
+                        // Remplit le vrai champ Symfony 
+                        if (cityFormInput) {
+                            cityFormInput.value = cityData.ville;
+                        }
                     }
                     if (cityData.departement && depInput) {
                         depInput.value = cityData.departement;
                     }
-                } else if (cityInput) {
-                    cityInput.value = '';
+                } else {
+                    if (citySearchInput) citySearchInput.value = '';
+                    if (cityFormInput) cityFormInput.value = '';
+                    console.log('Pas de données de géocodage');
                 }
             }
 
@@ -44,6 +56,65 @@ document.addEventListener('DOMContentLoaded', function() {
             if (lngForm) lngForm.value = lng;
         }
     }
+
+    // Fonction pour remplir le formulaire depuis les données d'une ville sélectionnée
+    function fillFormFromCity(cityData) {
+        
+        const citySearchInput = document.getElementById('citySearchInput'); 
+        const cityFormInput = document.querySelector('[name="alert_type_form[waterbody][city]"]'); 
+        const depInput = document.getElementById('alert_type_form_waterbody_department');
+        const latInput = document.getElementById('alert_type_form_waterbody_latitude');
+        const lngInput = document.getElementById('alert_type_form_waterbody_longitude');
+        const positionSpan = document.getElementById('position-display');
+        const customText = document.getElementById('custom-text');
+        
+        console.log('Éléments trouvés:');
+        console.log('- citySearchInput:', citySearchInput);
+        console.log('- cityFormInput:', cityFormInput);
+        console.log('- depInput:', depInput);
+        console.log('- latInput:', latInput);
+        console.log('- lngInput:', lngInput);
+        
+        if (cityData.nom) {
+            // Remplit l'input manuel (autocomplete)
+            if (citySearchInput) {
+                citySearchInput.value = cityData.nom;
+            }
+            // Remplit le vrai champ Symfony 
+            if (cityFormInput) {
+                cityFormInput.value = cityData.nom;
+            } 
+        }
+        
+        if (cityData.departement) {
+            if (depInput) {
+                depInput.value = cityData.departement.nom || cityData.departement;
+            }
+        }
+        
+        if (cityData.centre && cityData.centre.coordinates) {
+            const lng = cityData.centre.coordinates[0];
+            const lat = cityData.centre.coordinates[1];
+            
+            if (latInput) {
+                latInput.value = lat;
+            }
+            if (lngInput) {
+                lngInput.value = lng;
+            }
+            
+            if (positionSpan) {
+                positionSpan.textContent = lat + ', ' + lng;
+            }
+            if (customText) {
+                customText.style.display = 'none';
+            }
+        }
+        
+    }
+
+    // Exposer globalement pour que apiGeo.js puisse l'appeler
+    window.fillFormFromCity = fillFormFromCity;
 
     // Fonction pour ouvrir le modal avec overlay
     function openModal() {
@@ -82,11 +153,11 @@ document.addEventListener('DOMContentLoaded', function() {
         // Réinitialise les champs
         const positionSpan = document.getElementById('position-display');
         const customText = document.getElementById('custom-text');
-        const cityInput = document.getElementById('alert_type_form_waterbody_city');
+        const citySearchInput = document.getElementById('citySearchInput'); 
         
         if (positionSpan) positionSpan.textContent = '';
         if (customText) customText.style.display = '';
-        if (cityInput) cityInput.value = '';
+        if (citySearchInput) citySearchInput.value = '';
     }
 
     // Écouteur sur le bouton de fermeture

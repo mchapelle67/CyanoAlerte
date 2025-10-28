@@ -2,8 +2,9 @@
 document.addEventListener('DOMContentLoaded', function() {
     const inputZone = document.querySelector('.zone');
     const resultsList = document.querySelector('#zoneResults');
-    const inputCity = document.querySelector('#alert_type_form_waterbody_city');
+    const inputCity = document.querySelector('#citySearchInput'); 
     const resultsCity = document.querySelector('#cityResults');
+
 
     // ============== FONCTIONS UTILITAIRES ==============
     
@@ -197,7 +198,12 @@ document.addEventListener('DOMContentLoaded', function() {
     if (inputCity && resultsCity) {
         setupAutocomplete(inputCity, resultsCity, {
             includeDepartments: false,  // Recherche uniquement communes
-            onSelectCallback: null  // Pas d'action spéciale, juste remplir le champ
+            onSelectCallback: function(cityData, type) {
+                // Appelle la fonction du formulaire pour remplir les champs
+                if (window.fillFormFromCity && type === 'commune') {
+                    window.fillFormFromCity(cityData);
+                }
+            }
         });
     }
 });

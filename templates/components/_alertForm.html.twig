@@ -48,12 +48,12 @@
                     </div>
                 </div>
                 <div class="mb-4 flex flex-col">
-                <input type="text" class="bg-gray-50 w-full p-2 rounded border border-gray-300 focus:border-blue-300 focus:ring focus:ring-blue-200 placeholder-gray-400" name="zone" id="alert_type_form_waterbody_city" placeholder="ex: Paris">                    
-                    <ul id="cityResults" class="mt-2"></ul>
+                    <label class="font-medium mb-2">Localisation *</label>
+                    <input type="text" class="bg-gray-50 w-full p-2 rounded border border-gray-300 focus:border-blue-300 focus:ring focus:ring-blue-200 placeholder-gray-400" name="zone" id="citySearchInput" placeholder="ex: Paris">                    
+                        <ul id="cityResults" class="mt-2"></ul>
 
                     {{ form_row(alert_form.waterbody.city) }}
                     {{ form_row(alert_form.waterbody.department) }}
-
                 </div>
                 <div class="mb-4 flex flex-col">
                     {{ form_label(alert_form.toxicity_level, null, {'label_attr': {'class': 'font-medium mb-2'}}) }}
