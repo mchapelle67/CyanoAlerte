@@ -14,20 +14,20 @@ final class HomeController extends AbstractController
     #[Route('/cyanoalerte/accueil', name: 'app_home')]
     public function index(FormService $formService, Request $request): Response
     {
-        $form = $formService->createAlertForm();
         $result = $formService->handleAlertForm($request);
         
         if ($result['success']) {
             $this->addFlash('success', $result['message']);
             return $this->redirectToRoute('app_home');
-        } elseif ($result['message']) {
+        }
+        
+        if ($result['message']) {
             $this->addFlash('error', $result['message']);
-            return $this->redirectToRoute('app_home');
         }
 
         return $this->render('home/index.html.twig', [
             'controller_name' => 'HomeController',
-            'alert_form' => $form->createView()
+            'alert_form' => $result['form']->createView()
         ]);
     }
 }

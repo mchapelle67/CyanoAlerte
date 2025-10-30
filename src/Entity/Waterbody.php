@@ -43,7 +43,7 @@ class Waterbody
     /**
      * @var Collection<int, Picture>
      */
-    #[ORM\OneToMany(targetEntity: Picture::class, mappedBy: 'Waterbody')]
+    #[ORM\OneToMany(targetEntity: Picture::class, mappedBy: 'Waterbody', cascade: ['persist'], orphanRemoval: true)]
     private Collection $pictures;
 
     public function __construct()

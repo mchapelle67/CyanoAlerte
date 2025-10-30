@@ -2,6 +2,7 @@ import './bootstrap.js';
 import './styles/app.css';
 import '@tailwindplus/elements';
 import 'flowbite';
+import '@symfony/ux-dropzone/dist/style.min.css';
 
 import './js/map.js';
 import './js/apiGeo.js';
