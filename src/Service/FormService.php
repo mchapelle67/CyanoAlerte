@@ -6,11 +6,12 @@ use App\Entity\Alert;
 use App\Entity\Picture;
 use App\Form\AlertTypeForm;
 use App\Service\MailerService;
+use Symfony\Component\Form\FormError;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\FormFactoryInterface;
-use Symfony\Component\Form\FormError;
+use Symfony\Component\RateLimiter\RateLimiterFactory;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
@@ -21,16 +22,23 @@ class FormService
     private $entityManager;
     private $mailerService;
     private $photoDirectory;
+    private $alertLimiter;
 
 
-    public function __construct(EntityManagerInterface $entityManager, FormFactoryInterface $formFactory, MailerService $mailerService,
-    #[Autowire('%kernel.project_dir%/public/uploads/photos')] string $photoDirectory)
+    public function __construct(
+        EntityManagerInterface $entityManager, 
+        FormFactoryInterface $formFactory, 
+        MailerService $mailerService,
+        #[Autowire('%kernel.project_dir%/public/uploads/photos')] string $photoDirectory,
+        #[Autowire(service: 'limiter.alert_form')] RateLimiterFactory $alertLimiter
+    )
     {
         // pour créer le form (pas de fonction hérité de abstractController dans un service)
         $this->formFactory = $formFactory;
         $this->entityManager = $entityManager;
         $this->mailerService = $mailerService;
         $this->photoDirectory = $photoDirectory;
+        $this->alertLimiter = $alertLimiter;
         
     }
 
@@ -48,6 +56,16 @@ class FormService
         if ($form->isSubmitted() && $form->isValid()) {
 
             $alert = $form->getData();
+            
+            // vérifier le rate limit
+            $rateLimitError = $this->checkRateLimit($request);
+            if ($rateLimitError) {
+                return [
+                    'success' => false,
+                    'form' => $form,
+                    'message' => $rateLimitError
+                ];
+            }
             
             // gère l'upload de photos
             $uploadError = $this->handlePhotoUpload($alert, $form);
@@ -74,13 +92,13 @@ class FormService
             );
 
             // Envoyer un email de notification au créateur du signalement
-            $this->mailerService->sendEmail(
-                $alert->getEmail(),
-                'Merci pour votre contribution !',
-                'emails/twig/creatorAlert.html.twig',
-                'emails/txt/creatorAlert.txt.twig',
-                ['alert' => $alert] 
-            );
+            // $this->mailerService->sendEmail(
+            //     $alert->getEmail(),
+            //     'Merci pour votre contribution !',
+            //     'emails/twig/creatorAlert.html.twig',
+            //     'emails/txt/creatorAlert.txt.twig',
+            //     ['alert' => $alert] 
+            // );
 
             return [
                 'success' => true,
@@ -126,12 +144,25 @@ class FormService
                     return 'Erreur lors de l\'upload de la photo : ' . $e->getMessage(); 
                 }
                    
-                // on crée une nouvelle entité Photo
+                                // on crée une nouvelle entité Photo
                 $photo = new Picture();
                 $photo->setUrl($newFilename);
                 $alert->getWaterbody()->addPicture($photo);
             }
         }
         return null; 
+    }
+
+    private function checkRateLimit(Request $request): ?string
+    {
+        // utilise l'IP du client comme identifiant unique
+        $limiter = $this->alertLimiter->create($request->getClientIp());
+        
+        // tente de consommer 1 jeton
+        if (!$limiter->consume(1)->isAccepted()) {
+            return 'Trop de formulaires envoyés. Veuillez patienter avant de soumettre un nouveau signalement.';
+        }
+        
+        return null;
     }
 }
