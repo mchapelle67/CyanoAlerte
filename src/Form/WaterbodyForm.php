@@ -5,7 +5,6 @@ namespace App\Form;
 use App\Entity\Waterbody;
 use App\Entity\WaterbodyType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\UX\Dropzone\Form\DropzoneType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\All;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -35,13 +34,14 @@ class WaterbodyForm extends AbstractType
                 'choice_label' => 'type',          
                 'label' => 'Type de plan d\'eau'
             ])
-            ->add('photos', DropzoneType::class, [
+            ->add('photos', FileType::class, [
                 'label' => 'Photos',
                 'multiple' => true,
                 'mapped' => false,
                 'required' => false,
                 'attr' => [
-                    'placeholder' => 'Glissez vos images ici ou cliquez pour sélectionner'
+                    'accept' => 'image/*',
+                    'class' => 'hidden'
                 ],
                 'constraints' => [
                     new All([

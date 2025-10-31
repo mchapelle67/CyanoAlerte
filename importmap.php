@@ -25,7 +25,4 @@ return [
     '@hotwired/turbo' => [
         'version' => '7.3.0',
     ],
-    '@symfony/ux-dropzone' => [
-        'version' => '2.31.0',
-    ],
 ];
