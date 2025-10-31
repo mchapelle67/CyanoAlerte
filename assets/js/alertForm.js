@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     // on ajoute l'évenement qui permettra de récupérer la localisation au click
-    async function setAlertFormPosition(event){
+    async function setAlertFormPosition(event) {
         if (event && event.latlng) {
             let lat = event.latlng.lat;
             let lng = event.latlng.lng;
@@ -56,6 +56,21 @@ document.addEventListener('DOMContentLoaded', function() {
             if (lngForm) lngForm.value = lng;
         }
     }
+
+    // fonction pour afficher le nb de fichier séléctionnées 
+    function updateFileName(input) {
+        const fileChosen = document.getElementById('file-chosen');
+        if (input.files.length === 0) {
+            fileChosen.textContent = 'Aucun fichier sélectionné';
+        } else if (input.files.length === 1) {
+            fileChosen.textContent = input.files[0].name;
+        } else {
+            fileChosen.textContent = input.files.length + ' fichiers sélectionnés';
+        }
+    }
+
+     window.updateFileName = updateFileName;
+
 
     // Fonction pour remplir le formulaire depuis les données d'une ville sélectionnée
     function fillFormFromCity(cityData) {

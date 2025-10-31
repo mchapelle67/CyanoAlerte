@@ -41,7 +41,6 @@ class WaterbodyForm extends AbstractType
                 'required' => false,
                 'attr' => [
                     'accept' => 'image/*',
-                    'class' => 'hidden'
                 ],
                 'constraints' => [
                     new All([
