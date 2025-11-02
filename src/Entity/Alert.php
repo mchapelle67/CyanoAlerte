@@ -6,38 +6,71 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\AlertRepository;
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Delete;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: AlertRepository::class)]
 #[ORM\HasLifecycleCallbacks]
-#[ApiResource]
+#[ApiResource(
+    normalizationContext: ['groups' => ['alert:read']],
+    denormalizationContext: ['groups' => ['alert:create']],
+    formats: ['json' => 'application/json']
+)]
+#[GetCollection(
+    security: 'is_granted("PUBLIC_ACCESS")'
+)]
+#[Get(
+    security: 'is_granted("PUBLIC_ACCESS")'
+)]
+#[Post(
+    security: 'is_granted("PUBLIC_ACCESS")'
+)]
+#[Patch(
+    security: "is_granted('ROLE_ADMIN')"
+)]
+#[Delete(
+    security: "is_granted('ROLE_ADMIN')"
+)]
+
 class Alert
 {
+    #[Groups(['alert:read'])]
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Groups(['alert:read'])]
     #[ORM\Column(type: 'datetime_immutable')]
     private ?\DateTimeImmutable $created_at = null;
 
+    #[Groups(['alert:read'])]
     #[ORM\Column(type: 'datetime_immutable')]
     private ?\DateTimeImmutable $updated_at = null;
 
+    #[Groups(['alert:read'])]  
     #[ORM\Column]
     private ?bool $is_verified = false;
 
-
+    #[Groups(['alert:read', 'alert:create'])]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
+    #[Groups(['alert:read', 'alert:create'])]
     #[ORM\ManyToOne(targetEntity: Waterbody::class, inversedBy: 'alerts', cascade: ['persist'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?Waterbody $waterbody = null;
 
+    #[Groups(['alert:read', 'alert:create'])]
     #[ORM\ManyToOne(targetEntity: ToxicityLevel::class,inversedBy: 'alerts')]
     #[ORM\JoinColumn(nullable: false)]
     private ?ToxicityLevel $toxicity_level = null;
 
+     #[Groups(['alert:create'])]
     #[ORM\Column(length: 255)]
     private ?string $email = null;
 

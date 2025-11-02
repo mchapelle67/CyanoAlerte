@@ -6,30 +6,38 @@ use App\Repository\WaterbodyRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: WaterbodyRepository::class)]
 class Waterbody
 {
+    #[Groups(['alert:read'])]
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Groups(['alert:read', 'alert:create'])]
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
+    #[Groups(['alert:read', 'alert:create'])]
     #[ORM\Column(length: 255)]
     private ?string $latitude = null;
 
+    #[Groups(['alert:read', 'alert:create'])]
     #[ORM\Column(length: 255)]
     private ?string $longitude = null;
 
+    #[Groups(['alert:read', 'alert:create'])]
     #[ORM\Column(length: 255)]
     private ?string $department = null;
 
+    #[Groups(['alert:read', 'alert:create'])]
     #[ORM\Column(length: 255)]
     private ?string $city = null;
 
+    #[Groups(['alert:read', 'alert:create'])]
     #[ORM\ManyToOne(inversedBy: 'waterbodies')]
     #[ORM\JoinColumn(nullable: false)]
     private ?WaterbodyType $type = null;

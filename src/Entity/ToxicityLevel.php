@@ -2,10 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\ToxicityLevelRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ToxicityLevelRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: ToxicityLevelRepository::class)]
 class ToxicityLevel
@@ -13,8 +14,10 @@ class ToxicityLevel
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['alert:read'])]
     private ?int $id = null;
 
+    #[Groups(['alert:read'])]
     #[ORM\Column]
     private ?int $level = null;
 

@@ -9,6 +9,10 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+        api:
+            pattern: ^/api/
+            stateless: true
+            security: false  # API publique, pas d'authentification requise
         main:
             lazy: true
             provider: users_in_memory

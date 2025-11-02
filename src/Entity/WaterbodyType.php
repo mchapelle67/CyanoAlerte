@@ -2,11 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\WaterbodyTypeRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\WaterbodyTypeRepository;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Form\FormTypeInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: WaterbodyTypeRepository::class)]
 class WaterbodyType
@@ -14,8 +15,10 @@ class WaterbodyType
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['alert:read'])]
     private ?int $id = null;
 
+    #[Groups(['alert:read'])]
     #[ORM\Column(length: 255)]
     private ?string $type = null;
 
