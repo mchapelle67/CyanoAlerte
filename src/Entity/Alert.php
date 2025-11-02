@@ -5,9 +5,11 @@ namespace App\Entity;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\AlertRepository;
+use ApiPlatform\Metadata\ApiResource;
 
 #[ORM\Entity(repositoryClass: AlertRepository::class)]
 #[ORM\HasLifecycleCallbacks]
+#[ApiResource]
 class Alert
 {
     #[ORM\Id]
