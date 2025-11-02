@@ -12,6 +12,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ORM\Entity(repositoryClass: WaterbodyTypeRepository::class)]
 class WaterbodyType
 {
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -32,22 +33,27 @@ class WaterbodyType
     {
         $this->waterbodies = new ArrayCollection();
     }
-
+    
     public function getId(): ?int
     {
         return $this->id;
     }
-
+    
     public function getType(): ?string
     {
         return $this->type;
     }
-
+    
     public function setType(string $type): static
     {
         $this->type = $type;
-
+        
         return $this;
+    }
+    
+    public function __toString(): string
+    {
+        return $this->type;
     }
 
     /**

@@ -36,19 +36,24 @@ class ToxicityLevel
     {
         return $this->id;
     }
-
+    
     public function getLevel(): ?int
     {
         return $this->level;
     }
-
+    
     public function setLevel(int $level): static
     {
         $this->level = $level;
-
+        
         return $this;
     }
 
+    public function __toString() {
+
+        return $this->level;
+    }
+    
     /**
      * @return Collection<int, Alert>
      */
