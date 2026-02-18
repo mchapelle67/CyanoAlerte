@@ -42,7 +42,7 @@
                         class="font-medium text-lg hover:-translate-y-1"
                     />
                    <twig:SecondaryButton 
-                        text="Dernières alertes"
+                        text="Voir les alertes"
                         class="font-medium text-lg"
                     />
                 </div>
@@ -50,31 +50,65 @@
         </div>
     </section>
     {% include 'sections/_flashMessages.html.twig' %}
-    <section class="px-10 pt-3 flex gap-6">
+    <section class="custom-padding flex gap-6">
         {% include 'sections/_map.html.twig' %}
         <section class="w-[40%]">
             <div class="p-5 bg-white custom-border mb-4">
-                <h2 class="custom-h2 text-green-800 mb-4">Rechercher par zone</h2>
+                <h2 class="flex gap-3 items-center custom-h2 text-green-800 mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="25" width="25" viewBox="0 0 640 640"><!--!Font Awesome Free v7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path fill="#166534" d="M480 272C480 317.9 465.1 360.3 440 394.7L566.6 521.4C579.1 533.9 579.1 554.2 566.6 566.7C554.1 579.2 533.8 579.2 521.3 566.7L394.7 440C360.3 465.1 317.9 480 272 480C157.1 480 64 386.9 64 272C64 157.1 157.1 64 272 64C386.9 64 480 157.1 480 272zM272 416C351.5 416 416 351.5 416 272C416 192.5 351.5 128 272 128C192.5 128 128 192.5 128 272C128 351.5 192.5 416 272 416z"/></svg>
+                    Rechercher par zone
+                </h2>
                 <input type="text" class="zone w-full p-2 rounded border-gray-300 focus:border-blue-300 placeholder-gray-400" name="zone" id="zone" placeholder="Saisir une ville ou un département...">                    
                     <ul id="zoneResults" class="mt-2"></ul>
             </div>
             <div class="p-5 bg-white custom-border">
-                <div class="flex justify-around pt-2 pb-6"> 
-                    <h2 class="custom-h2 text-center flex items-center text-green-800">Nouvelle alerte</h2>
-                    <twig:PrimaryButton 
-                        id="signaler-btn"
-                        text="Signaler"
-                        class="text-lg"
-                        modalToggle="crud-modal"
-                        icon='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" class="w-5 h-5 fill-white group-hover:rotate-90 transition-transform duration-1000 origin-center"><path d="M352 128C352 110.3 337.7 96 320 96C302.3 96 288 110.3 288 128L288 288L128 288C110.3 288 96 302.3 96 320C96 337.7 110.3 352 128 352L288 352L288 512C288 529.7 302.3 544 320 544C337.7 544 352 529.7 352 512L352 352L512 352C529.7 352 544 337.7 544 320C544 302.3 529.7 288 512 288L352 288L352 128z"/></svg>'
-                    />
-                    {% include 'sections/_alertForm.html.twig' %}
-                </div>
-                <p class="text-center text-gray-600 py-6 border-t-2">
-                    Signalez une suspision de cyanobactéries en remplissant le formulaire ou en cliquant directement sur la carte.
-                </p>
+                <h2 class="flex items-center gap-3 custom-h2 pb-3 text-center text-green-800">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="25" width="25" viewBox="0 0 640 640"><!--!Font Awesome Free v7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path fill="#166534" d="M528 320C528 434.9 434.9 528 320 528C205.1 528 112 434.9 112 320C112 205.1 205.1 112 320 112C434.9 112 528 205.1 528 320zM64 320C64 461.4 178.6 576 320 576C461.4 576 576 461.4 576 320C576 178.6 461.4 64 320 64C178.6 64 64 178.6 64 320zM296 184L296 320C296 328 300 335.5 306.7 340L402.7 404C413.7 411.4 428.6 408.4 436 397.3C443.4 386.2 440.4 371.4 429.3 364L344 307.2L344 184C344 170.7 333.3 160 320 160C306.7 160 296 170.7 296 184z"/></svg>
+                    Dernières alertes
+                </h2>
+                {# {% for alert in latestAlerts %}
+                    <div class="mb-4 p-4 bg-gray-100 rounded-lg border border-gray-300">
+                        <h3 class="text-lg font-semibold text-gray-800">{{ alert.location }}</h3>
+                        <p class="text-sm text-gray-600">{{ alert.description }}</p>
+                        <p class="text-xs text-gray-500 mt-2">{{ alert.createdAt|date('d M Y H:i') }}</p>
+                    </div>
+                {% else %} #}
+                    <p class="text-center text-gray-600 py-6 border-t-2">
+                        Aucune alerte récente. Signalez une suspicion de cyanobactéries en cliquant directement sur la carte.
+                    </p>                
+                {# {% endfor %} #}
             </div>
         </section>
+    </section>
+    <section class="pb-4 flex w-full mx-auto justify-center px-10 gap-6">
+        <twig:Card
+        icon='<img src="{{ asset("images/icons/alerte.png") }}" alt="Icône alerte" class="w-10 h-10" />'
+        title="Alertes actives"
+        subtitle="signalements en cours"
+        number="42"
+        color="text-blue-600"
+        />
+        <twig:Card
+        icon='<img src="{{ asset("images/icons/localisateur.png") }}" alt="Icône zones surveillées" class="w-10 h-10" />'
+        title="Zones surveillées"
+        subtitle="départements couverts"
+        number="10"
+        color="text-green-700"
+        />
+        <twig:Card
+        icon='<img src="{{ asset("images/icons/line-up.png") }}" alt="Icône alertes prioritaires" class="w-10 h-10" />'
+        title="Niveau élevé"
+        subtitle="alertes prioritaires"
+        number="5"
+        color="text-red-600"
+        />
+        <twig:Card
+        icon='<img src="{{ asset("images/icons/calendar.png") }}" alt="Icône nouveaux signalements" class="w-10 h-10" />'
+        title="Nouveaux signalements"
+        subtitle="cette semaine"
+        number="12"
+        color="text-orange-600"
+        />
     </section>
     <button><a href="{{ path('app_alerts') }}">Voir toutes les alertes</a></button>
 </main>

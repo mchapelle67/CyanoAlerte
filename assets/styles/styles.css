@@ -21,21 +21,18 @@
         @apply text-2xl;
     }
     .custom-h3 {
-        @apply ;
+        @apply text-xl;
     }
     .custom-p {
         @apply text-lg/8 text-gray-600;
     }
     .custom-padding {
-        @apply ;
+        @apply mx-10 my-14;
     }
     .custom-border {
         @apply rounded-lg shadow-lg;
     }
-    .btn-primary {
-        @apply ;
-    }
-    .btn-secondary {
-        @apply ;
+    .card-hover {
+        @apply transition-transform duration-300 hover:scale-105;
     }
 }
