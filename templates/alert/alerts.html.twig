@@ -7,13 +7,20 @@
 {% block title %}CyanoAlerte - Liste des alertes de cyanobactéries{% endblock %}
 
 {% block body %}
-<main>
-    <span class="">Retour à l'accueil</span>
-    <h1>Liste des alertes de cyanobactéries</h1>
-    <p>
+<main class="bg-blue-50 min-h-screen">
+    <div class="bg-white p-4">
+           <button class="flex items-center mx-6 py-2 px-4 rounded-lg hover:shadow-md hover:bg-gray-100 transition-shadow duration-200 font-medium text-gray-600">
+    <svg class="h-5 w-5 mr-3 text-gray-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free v7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M73.4 297.4C60.9 309.9 60.9 330.2 73.4 342.7L233.4 502.7C245.9 515.2 266.2 515.2 278.7 502.7C291.2 490.2 291.2 469.9 278.7 457.4L173.3 352L544 352C561.7 352 576 337.7 576 320C576 302.3 561.7 288 544 288L173.3 288L278.7 182.6C291.2 170.1 291.2 149.8 278.7 137.3C266.2 124.8 245.9 124.8 233.4 137.3L73.4 297.3z"/></svg>
+            Retour à l'accueil
+        </button>
+    </div>
+
+    <h1 class="text-5xl font-medium text-center text-green-800 pt-10 font-stretch-condensed">Liste des alertes de cyanobactéries</h1>
+    <p class="text-lg/8 text-center text-gray-600 py-6">
         Consultez l'ensemble des signalements de cyanobactéries. Utilisez les filtres pour rechercher par secteur ou par niveau d'alerte.
     </p>
 
+    {{ include('components/_searchbar.html.twig') }}
 
     <section class="">
         {% for alert in alerts %}

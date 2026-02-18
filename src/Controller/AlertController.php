@@ -8,7 +8,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-#[Route('/cyanoalerte')]
 final class AlertController extends AbstractController
 {
     #[Route('/alertes', name: 'app_alerts')]

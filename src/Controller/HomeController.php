@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Service\ApiService;
 use App\Service\FormService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -11,7 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 final class HomeController extends AbstractController 
 {
-    #[Route('/cyanoalerte/accueil', name: 'app_home')]
+    #[Route('/accueil', name: 'app_home')]
     public function index(FormService $formService, Request $request): Response
     {
         $result = $formService->handleAlertForm($request);
