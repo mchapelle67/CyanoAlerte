@@ -1,5 +1,5 @@
 import './bootstrap.js';
-import './styles/app.css';
+import './app.css';
 import '@tailwindplus/elements';
 import 'flowbite';
 

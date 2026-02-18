@@ -1,0 +1,10 @@
+<button 
+    {% if id %}id="{{ id }}"{% endif %}
+    class="group btn-hover-effect flex items-center gap-2 text-white bg-custom-gradient font-medium rounded-lg text-xl px-6 py-2 w-fit text-center relative z-10 {{ class }}" 
+    type="{{ type }}"
+    {% if modalToggle %}data-modal-toggle="{{ modalToggle }}"{% endif %}>
+    {% if icon %}
+        {{ icon|raw }}
+    {% endif %}
+    {{ text }}
+</button>

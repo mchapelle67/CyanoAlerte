@@ -24,7 +24,7 @@ final class HomeController extends AbstractController
             $this->addFlash('error', $result['message']);
         }
 
-        return $this->render('home/index.html.twig', [
+        return $this->render('index.html.twig', [
             'controller_name' => 'HomeController',
             'alert_form' => $result['form']->createView()
         ]);

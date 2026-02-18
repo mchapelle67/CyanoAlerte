@@ -24,7 +24,7 @@
                 sizes="100vw" #}
                 alt="Image de fond composé d'une forme géométrique"
                 class="object-cover w-full h-full">
-            <div class="absolute inset-0 bg-gradient-to-b from-black/50 via-black/20 to-transparent"></div>
+            <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-black/0"></div>
         </figure>
         <div class="hero-content">
             <div class="backdrop-blur-sm bg-white/10 rounded-3xl p-8 lg:p-12 shadow-2xl border border-white/20 max-w-4xl">
@@ -47,9 +47,9 @@
             </div>
         </div>
     </section>
-    {% include 'components/_flashMessages.html.twig' %}
+    {% include 'sections/_flashMessages.html.twig' %}
     <section class="px-10 pt-3 flex gap-6">
-        {% include 'components/_map.html.twig' %}
+        {% include 'sections/_map.html.twig' %}
         <section class="w-[40%]">
             <div class="p-5 bg-white custom-border mb-4">
                 <h2 class="custom-h2 text-green-800 mb-4">Rechercher par zone</h2>
@@ -59,8 +59,13 @@
             <div class="p-5 bg-white custom-border">
                 <div class="flex justify-around pt-2 pb-6"> 
                     <h2 class="custom-h2 text-center flex items-center text-green-800">Nouvelle alerte</h2>
-                    {% include 'components/_primary_button.html.twig' %}
-                    {% include 'components/_alertForm.html.twig' %}
+                    <twig:PrimaryButton 
+                        id="signaler-btn"
+                        text="Signaler"
+                        modalToggle="crud-modal"
+                        icon='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" class="w-5 h-5 fill-white group-hover:rotate-90 transition-transform duration-1000 origin-center"><path d="M352 128C352 110.3 337.7 96 320 96C302.3 96 288 110.3 288 128L288 288L128 288C110.3 288 96 302.3 96 320C96 337.7 110.3 352 128 352L288 352L288 512C288 529.7 302.3 544 320 544C337.7 544 352 529.7 352 512L352 352L512 352C529.7 352 544 337.7 544 320C544 302.3 529.7 288 512 288L352 288L352 128z"/></svg>'
+                    />
+                    {% include 'sections/_alertForm.html.twig' %}
                 </div>
                 <p class="text-center text-gray-600 py-6 border-t-2">
                     Signalez une suspision de cyanobactéries en remplissant le formulaire ou en cliquant directement sur la carte.
@@ -70,5 +75,4 @@
     </section>
     <button><a href="{{ path('app_alerts') }}">Voir toutes les alertes</a></button>
 </main>
-
 {% endblock %}
