@@ -1,0 +1,38 @@
+@layer components{
+    *{
+        @apply p-0 m-0 box-border scroll-smooth;
+    }
+    nav, button, h1, h2, h3, h4, h5, h6 {
+        font-family: theme('fontFamily.display');
+    }
+    a {
+        @apply cursor-pointer hover:transition;
+    }
+    #wrapper {
+        @apply w-full bg-blue-50 min-h-screen;
+    }
+    .custom-h1 {
+        @apply text-5xl font-medium;
+    }
+    .custom-h2 {
+        @apply text-2xl;
+    }
+    .custom-h3 {
+        @apply ;
+    }
+    .custom-p {
+        @apply text-lg/8 text-gray-600;
+    }
+    .custom-padding {
+        @apply ;
+    }
+    .custom-border {
+        @apply rounded-lg shadow-lg;
+    }
+    .btn-primary {
+        @apply ;
+    }
+    .btn-secondary {
+        @apply ;
+    }
+}

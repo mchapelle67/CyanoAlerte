@@ -11,7 +11,7 @@
 
   .nav-gradient:hover,
   .nav-login:hover {
-    -webkit-text-fill-color: transparent;
+    -webkit-text-fill-color: transparent !important;
   }
 
   .nav-login::after {

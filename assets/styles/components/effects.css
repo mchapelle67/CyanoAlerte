@@ -1,5 +1,0 @@
-@layer components {
-  .btn-hover-effect {
-    @apply transition-all duration-500 bg-[length:140%_auto] hover:bg-right;
-  }
-}
