@@ -164,6 +164,13 @@ document.addEventListener('DOMContentLoaded', function() {
         if (backdrop) {
             backdrop.classList.add('hidden');
         }
+
+        document.querySelectorAll('.modal-backdrop, [modal-backdrop], #modal-backdrop').forEach((overlay) => {
+            overlay.remove();
+        });
+
+        document.body.classList.remove('overflow-hidden');
+        document.documentElement.classList.remove('overflow-hidden');
         
         // Réinitialise les champs
         const positionSpan = document.getElementById('position-display');
@@ -182,6 +189,15 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             e.stopPropagation();
             closeModal();
+        });
+    }
+
+    const modal = document.getElementById('crud-modal');
+    if (modal) {
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                closeModal();
+            }
         });
     }
 
