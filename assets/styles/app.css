@@ -2,18 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-@import './components/components.css';
+@import './components/navbar.css';
+@import './components/alert-form.css';
 @import './components/effects.css';
-
-@layer base {
-  :root {
-    --gradient: linear-gradient(0.25turn, #2c5df1, rgb(52, 150, 108));
-  }
-  
-  nav, button, h1, h2, h3, h4, h5, h6 {
-    font-family: theme('fontFamily.display');
-  }
-}
 
 @font-face {
     font-family: 'Montserrat';
@@ -45,7 +36,27 @@
     font-display: swap;
 }
 
-/* text green : green-800 */
-/* text gray : gray-600 */
-/* element: blue-700 */
+@theme{
+  /* text green : green-800 */
+  /* text gray : gray-600 */
+  /* element: blue-700 */
+  --gradient: linear-gradient(0.25turn, #2c5df1, rgb(52, 150, 108));
+}
+
+@layer components{
+  *{
+    @apply p-0 m-0 box-border scroll-smooth;
+  }
+
+  nav, button, h1, h2, h3, h4, h5, h6 {
+    font-family: theme('fontFamily.display');
+  }
+
+  a {
+    @apply cursor-pointer;
+  }
+
+}
+
+
 

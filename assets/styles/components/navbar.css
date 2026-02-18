@@ -1,0 +1,27 @@
+@layer components {
+  .nav-gradient,
+  .nav-login {
+    @apply relative;
+    background: var(--gradient);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: rgb(115, 115, 115);
+    transition: -webkit-text-fill-color 0.3s ease;
+  }
+
+  .nav-gradient:hover,
+  .nav-login:hover {
+    -webkit-text-fill-color: transparent;
+  }
+
+  .nav-login::after {
+    @apply absolute bottom-[-2px] left-1/2 w-0 h-0.5;
+    content: "";
+    background: var(--gradient);
+    transition: width 0.3s ease, left 0.3s ease;
+  }
+
+  .nav-login:hover::after {
+    @apply w-full left-0;
+  }
+}

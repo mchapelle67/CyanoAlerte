@@ -1,8 +1,5 @@
-.btn-hover-effect {
-  transition: 0.5s;
-  background-size: 140% auto;
- }
-
- .btn-hover-effect:hover {
-  background-position: right center;
+@layer components {
+  .btn-hover-effect {
+    @apply transition-all duration-500 bg-[length:140%_auto] hover:bg-right;
+  }
 }
