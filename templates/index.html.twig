@@ -24,7 +24,7 @@
                 sizes="100vw" #}
                 alt="Image de fond composé d'une forme géométrique"
                 class="object-cover w-full h-full">
-            <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-black/0"></div>
+            <div class="absolute inset-0 bg-gradient-to-b from-black/50 via-black/20 to-transparent"></div>
         </figure>
         <div class="hero-content">
             <div class="backdrop-blur-sm bg-white/10 rounded-3xl p-8 lg:p-12 shadow-2xl border border-white/20 max-w-4xl">
@@ -37,12 +37,14 @@
                     Aidez à protéger la santé publique et l'environnement aquatique.
                 </p>
                 <div class="flex gap-4 justify-center flex-wrap">
-                    <a href="#map" class="btn-hover-effect bg-gradient-to-r from-blue-600 to-green-600 text-white px-8 py-4 rounded-xl font-semibold shadow-lg hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300">
-                        Voir la carte
-                    </a>
-                    <a href="{{ path('app_alerts') }}" class="backdrop-blur-md bg-white/20 text-white px-8 py-4 rounded-xl font-semibold border-2 border-white/30 hover:bg-white/30 transition-all duration-300">
-                        Toutes les alertes
-                    </a>
+                   <twig:PrimaryButton 
+                        text="Découvrir la carte"
+                        class="font-medium text-lg hover:-translate-y-1"
+                    />
+                   <twig:SecondaryButton 
+                        text="Dernières alertes"
+                        class="font-medium text-lg"
+                    />
                 </div>
             </div>
         </div>
@@ -62,6 +64,7 @@
                     <twig:PrimaryButton 
                         id="signaler-btn"
                         text="Signaler"
+                        class="text-lg"
                         modalToggle="crud-modal"
                         icon='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" class="w-5 h-5 fill-white group-hover:rotate-90 transition-transform duration-1000 origin-center"><path d="M352 128C352 110.3 337.7 96 320 96C302.3 96 288 110.3 288 128L288 288L128 288C110.3 288 96 302.3 96 320C96 337.7 110.3 352 128 352L288 352L288 512C288 529.7 302.3 544 320 544C337.7 544 352 529.7 352 512L352 352L512 352C529.7 352 544 337.7 544 320C544 302.3 529.7 288 512 288L352 288L352 128z"/></svg>'
                     />

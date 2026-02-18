@@ -4,7 +4,7 @@ namespace App\Twig\Components;
 
 use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
-#[AsTwigComponent('PrimaryButton')]
+#[AsTwigComponent(name: 'PrimaryButton', template: 'components/Button/PrimaryButton.html.twig')]
 class PrimaryButton
 {
     public string $id = '';
