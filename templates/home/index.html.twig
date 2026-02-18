@@ -8,19 +8,43 @@
 
 {% block body %}
 <main id="wrapper">
-    <section>
-        <div>
-            <h1 class="custom-h1 text-green-800 pt-10">
-                Protégez les eaux, <br>
-                signalez les cyanobactéries
-            </h1>
-            <p class="custom-p py-6">
-                Signalez et consultez les alertes de cyanobactéries dans les lacs, rivières et étangs.<br>
-                Aidez à protéger la santé publique et l'environnement aquatique.
-            </p>
-        </div> 
-        <div>
-            {# image #}
+    <section class="hero">
+        <figure class="hero-figure">
+            <img 
+                fetchpriority="high"
+                loading="eager"
+                decoding="async"
+                src="{{ asset('images/lac.jpg') }}" 
+                {# srcset="
+                    ../images/lac-960.jpg 960w,
+                    ../images/lac-1536.jpg 1536w,
+                    ../images/lac-2048.jpg 2048w,
+                    ../images/lac-2560.jpg 2560w
+                "
+                sizes="100vw" #}
+                alt="Image de fond composé d'une forme géométrique"
+                class="object-cover w-full h-full">
+            <div class="absolute inset-0 bg-gradient-to-b from-black/50 via-black/20 to-transparent"></div>
+        </figure>
+        <div class="hero-content">
+            <div class="backdrop-blur-sm bg-white/10 rounded-3xl p-8 lg:p-12 shadow-2xl border border-white/20 max-w-4xl">
+                <h1 class="custom-h1 text-white drop-shadow-lg mb-6">
+                    Protégez les <span class="text-blue-300 font-semibold">eaux</span>, <br>
+                    signalez les <span class="text-green-300 font-semibold">cyanobactéries</span>
+                </h1>
+                <p class="custom-p text-white/90 drop-shadow-md mb-8 leading-relaxed">
+                    Signalez et consultez les alertes de cyanobactéries dans les lacs, rivières et étangs.<br>
+                    Aidez à protéger la santé publique et l'environnement aquatique.
+                </p>
+                <div class="flex gap-4 justify-center flex-wrap">
+                    <a href="#map" class="btn-hover-effect bg-gradient-to-r from-blue-600 to-green-600 text-white px-8 py-4 rounded-xl font-semibold shadow-lg hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300">
+                        Voir la carte
+                    </a>
+                    <a href="{{ path('app_alerts') }}" class="backdrop-blur-md bg-white/20 text-white px-8 py-4 rounded-xl font-semibold border-2 border-white/30 hover:bg-white/30 transition-all duration-300">
+                        Toutes les alertes
+                    </a>
+                </div>
+            </div>
         </div>
     </section>
     {% include 'components/_flashMessages.html.twig' %}
@@ -35,7 +59,8 @@
             <div class="p-5 bg-white custom-border">
                 <div class="flex justify-around pt-2 pb-6"> 
                     <h2 class="custom-h2 text-center flex items-center text-green-800">Nouvelle alerte</h2>
-                    {{ include('components/_alertForm.html.twig') }}
+                    {% include 'components/_primary_button.html.twig' %}
+                    {% include 'components/_alertForm.html.twig' %}
                 </div>
                 <p class="text-center text-gray-600 py-6 border-t-2">
                     Signalez une suspision de cyanobactéries en remplissant le formulaire ou en cliquant directement sur la carte.
