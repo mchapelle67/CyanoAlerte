@@ -110,6 +110,10 @@
         color="text-orange-600"
         />
     </section>
-    <button><a href="{{ path('app_alerts') }}">Voir toutes les alertes</a></button>
+    <div class="py-8 flex justify-center">
+        <a href="{{ path('app_alerts') }}" class="hover:-translate-y-1 text-lg backdrop-blur-md bg-white/60 text-gray-700 px-8 py-3 rounded-xl font-medium border-2 border-gray-200 hover:bg-white transition-all duration-300">
+            Voir toutes les alertes
+        </a>
+    </div>
 </main>
 {% endblock %}

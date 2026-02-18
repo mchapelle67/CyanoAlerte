@@ -30,7 +30,7 @@
         @apply mx-10 my-14;
     }
     .custom-border {
-        @apply rounded-lg shadow-lg;
+        @apply rounded-xl shadow-lg;
     }
     .card-hover {
         @apply transition-transform duration-300 hover:scale-105;
