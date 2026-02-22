@@ -1,5 +1,6 @@
 @import './styles/styles.css';
 @import './styles/home.css';
+@import './styles/alerts.css';
 @import './styles/components/navbar.css';
 @import './styles/components/alert-form.css';
 @import './styles/effects.css';

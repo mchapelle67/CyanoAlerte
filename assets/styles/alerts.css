@@ -1,0 +1,21 @@
+@layer components {
+    .alert-card {
+        @apply mb-4 p-4 rounded-lg border transform transition-all duration-300 ease-out hover:scale-[1.02] hover:cursor-pointer;
+    }
+
+    .highlevelcolor {
+        @apply bg-red-50 border-red-200 text-red-900;
+    }
+
+    .mediumlevelcolor {
+        @apply bg-orange-50 border-orange-200 text-orange-900;
+    }
+
+    .lowlevelcolor {
+        @apply bg-[#e6f3ea] border-[#b8d6c0] text-[#3f6450];
+    }
+
+    .neutrecolor {
+        @apply bg-slate-50 border-slate-200 text-slate-800;
+    }
+}

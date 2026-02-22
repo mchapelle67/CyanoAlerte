@@ -72,7 +72,7 @@ class Waterbody
 
     public function setName(string $name): static
     {
-        $this->name = $name;
+        $this->name = $this->normalizeFirstUpperRestLower($name);
 
         return $this;
     }
@@ -108,7 +108,7 @@ class Waterbody
 
     public function setDepartment(string $department): static
     {
-        $this->department = $department;
+        $this->department = $this->normalizeFirstUpperRestLower($department);
 
         return $this;
     }
@@ -120,7 +120,7 @@ class Waterbody
 
     public function setCity(string $city): static
     {
-        $this->city = $city;
+        $this->city = $this->normalizeFirstUpperRestLower($city);
 
         return $this;
     }
@@ -195,5 +195,18 @@ class Waterbody
         }
 
         return $this;
+    }
+
+    private function normalizeFirstUpperRestLower(string $value): string
+    {
+        $value = trim($value);
+
+        if ($value === '') {
+            return $value;
+        }
+
+        $value = mb_strtolower($value, 'UTF-8');
+
+        return mb_strtoupper(mb_substr($value, 0, 1, 'UTF-8'), 'UTF-8') . mb_substr($value, 1, null, 'UTF-8');
     }
 }

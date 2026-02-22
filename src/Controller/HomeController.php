@@ -3,17 +3,20 @@
 namespace App\Controller;
 
 use App\Service\FormService;
+use App\Service\HomeDataProvider;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
 
 final class HomeController extends AbstractController 
 {
     #[Route('/accueil', name: 'app_home')]
-    public function index(FormService $formService, Request $request): Response
+    public function index(FormService $formService, Request $request, HomeDataProvider $homeDataProvider): Response
     {
         $result = $formService->handleAlertForm($request);
+        $homeData = $homeDataProvider->getHomeData();
         
         if ($result['success']) {
             $this->addFlash('success', $result['message']);
@@ -26,7 +29,8 @@ final class HomeController extends AbstractController
 
         return $this->render('index.html.twig', [
             'controller_name' => 'HomeController',
-            'alert_form' => $result['form']->createView()
+            'alert_form' => $result['form']->createView(),
+            'homeData' => $homeData
         ]);
     }
 }
