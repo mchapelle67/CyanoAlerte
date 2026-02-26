@@ -3,21 +3,34 @@
 namespace App\Controller;
 
 use App\Repository\AlertRepository;
+use App\Service\AlertsDataProvider;
+use App\Service\FormService;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 final class AlertController extends AbstractController
 {
     #[Route('/alertes', name: 'app_alerts')]
-    public function alertAll(AlertRepository $alertRepository): Response
+    public function alertsAll(FormService $formService, Request $request, AlertsDataProvider $alertsDataProvider): Response
     {
-        $alerts = $alertRepository->findBy([], ['created_at' => 'DESC']);
+        $result = $formService->handleAlertForm($request);
+        $alertsData = $alertsDataProvider->getAlertsData();
+        
+        if ($result['success']) {
+            $this->addFlash('success', $result['message']);
+            return $this->redirectToRoute('app_home');
+        }
+        
+        if ($result['message']) {
+            $this->addFlash('error', $result['message']);
+        }
 
-        return $this->render('alert/alerts.html.twig', [
+        return $this->render('alert/alertsAll.html.twig', [
             'controller_name' => 'AlertController',
-            'alerts' => $alerts
+            'alert_form' => $result['form']->createView(),
+            'alertsData' => $alertsData
         ]);
     }
 

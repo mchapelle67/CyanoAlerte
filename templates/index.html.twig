@@ -75,7 +75,7 @@
                                 {{ alert.waterbody.name ?? 'Nom du plan d\'eau non renseigné' }}
                             </h3>
                             <p class="text-sm text-gray-600">
-                                <span class="font-semibold">{{ alert.waterbody.city ?? 'Ville non renseignée' }}</span>, département {{ alert.waterbody.department ?? 'N/A' }}
+                                <span class="font-semibold">{{ alert.waterbody.city ?? 'Ville non renseignée' }}</span>, département : {{ alert.waterbody.department ?? 'N/A' }}
                             </p>
                             <p class="text-xs text-gray-500 mt-2">{{ alert.created_at|date('d M Y H:i') }}</p>
                         </div>
