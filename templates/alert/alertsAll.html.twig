@@ -9,8 +9,9 @@
 {% block body %}
 <main class="bg-blue-50 min-h-screen">
     <section class="bg-white/90 backdrop-blur-sm p-4 border-b border-gray-100">
-        <twig:BackButton 
-            text="Retour à l'accueil"
+        <twig:TerciaryButton 
+            label="Retour à l'accueil"
+            class="font-medium text-lg"
         />
     </section>
     <section class="relative h-1/3 w-full flex items-center">
@@ -46,25 +47,34 @@
     <section class="custom-padding">
         {% for alert in alertsData.alerts %}
             {% if alert is defined %}
-            <article class="mx-10 mb-4 p-5 bg-white custom-border border border-gray-200 hover:shadow-xl transition-all duration-300">
-                <h2 class="custom-h3 leading-tight mb-3">{{ alert.waterbody.name ?? 'Nom inconnu' }}</h2>
-                <span class="text-gray-700 mb-1 flex items-center gap-1">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 sm:w-6 sm:h-6 text-gray-600" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            {% set toxicityLevel = alert.toxicity_level.level|default(0) %}
+            {% set toxicityLabel = toxicityLevel == 3 ? 'Élevé' : (toxicityLevel == 2 ? 'Moyen' : (toxicityLevel == 1 ? 'Faible' : 'Non défini')) %}
+            {% set toxicityClass = toxicityLevel == 3 ? 'bg-red-100 text-red-700 border-red-200' : (toxicityLevel == 2 ? 'bg-orange-100 text-orange-700 border-orange-200' : (toxicityLevel == 1 ? 'bg-green-100 text-green-700 border-green-200' : 'bg-slate-100 text-slate-600 border-slate-200')) %}
+            <article class="mx-10 mb-4 p-5 text-gray-700 bg-white custom-border border border-gray-200 hover:shadow-xl transition-all duration-300 space-y-4">
+                <div class="flex items-start justify-between gap-3">
+                    <h2 class="custom-h3 leading-tight">{{ alert.waterbody.name ?? 'Nom inconnu' }}</h2>
+                    <span class="inline-flex items-center px-3 py-1.5 rounded-full text-sm font-semibold border {{ toxicityClass }}">{{ toxicityLabel }}</span>
+                </div>
+                <div class="flex items-center gap-2 text-gray-700">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 sm:w-6 sm:h-6 shrink-0 text-gray-600" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                         <path d="M12 21s-6-4.35-6-10a6 6 0 1 1 12 0c0 5.65-6 10-6 10z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
                         <circle cx="12" cy="11" r="2.5" stroke="currentColor" stroke-width="1.8"/>
                     </svg>
-                    {{ alert.waterbody.city ?? 'Ville non renseignée' }}, {{ alert.waterbody.department ?? 'Département non renseigné' }} <span class="mx-2 text-gray-400 text-xs">•</span> {{ alert.waterbody.type.type ?? 'Type de plan d\'eau inconnu' }}
-                </span>
-                <p class="text-gray-700 my-4">{{ alert.description is defined and alert.description ? alert.description : 'Description non renseignée' }}</p>
-                <hr class="border-gray-200 my-8">
-                <span class="text-gray-700 mb-1 flex items-center gap-1">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-86 h-6" viewBox="0 0 640 640"><!--!Font Awesome Free v7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path fill="#4b5563" d="M216 64C229.3 64 240 74.7 240 88L240 128L400 128L400 88C400 74.7 410.7 64 424 64C437.3 64 448 74.7 448 88L448 128L480 128C515.3 128 544 156.7 544 192L544 480C544 515.3 515.3 544 480 544L160 544C124.7 544 96 515.3 96 480L96 192C96 156.7 124.7 128 160 128L192 128L192 88C192 74.7 202.7 64 216 64zM216 176L160 176C151.2 176 144 183.2 144 192L144 240L496 240L496 192C496 183.2 488.8 176 480 176L216 176zM144 288L144 480C144 488.8 151.2 496 160 496L480 496C488.8 496 496 488.8 496 480L496 288L144 288z"/></svg>
-                    {{ alert.created_at|format_datetime(pattern='d MMMM y', locale='fr') }}
-                </span>
-                <a href="{{ path('app_alert_detail', { id: alert.id }) }}" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-white bg-custom-gradient btn-hover-effect font-medium">
-                    Voir les détails
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 640 640" fill="currentColor" aria-hidden="true"><path d="M438.6 297.4C451.1 309.9 451.1 330.2 438.6 342.7L278.6 502.7C266.1 515.2 245.8 515.2 233.3 502.7C220.8 490.2 220.8 469.9 233.3 457.4L338.7 352L96 352C78.3 352 64 337.7 64 320C64 302.3 78.3 288 96 288L338.7 288L233.3 182.6C220.8 170.1 220.8 149.8 233.3 137.3C245.8 124.8 266.1 124.8 278.6 137.3L438.6 297.3z"/></svg>
-                </a>
+                    <span class="leading-6">{{ alert.waterbody.city ?? 'Ville non renseignée' }}, {{ alert.waterbody.department ?? 'Département non renseigné' }} <span class="mx-2 text-gray-400 text-xs">•</span> {{ alert.waterbody.type.type ?? 'Type de plan d\'eau inconnu' }}</span>
+                </div>
+                <p class="text-gray-700">{{ alert.description is defined and alert.description ? alert.description : 'Description non renseignée' }}</p>
+                <hr class="border-gray-200">
+                <div class="flex flex-wrap items-center justify-between gap-3">
+                    <div class="text-gray-700 flex items-center gap-2 leading-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 sm:w-6 sm:h-6 shrink-0" viewBox="0 0 640 640"><!--!Font Awesome Free v7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path fill="#4b5563" d="M216 64C229.3 64 240 74.7 240 88L240 128L400 128L400 88C400 74.7 410.7 64 424 64C437.3 64 448 74.7 448 88L448 128L480 128C515.3 128 544 156.7 544 192L544 480C544 515.3 515.3 544 480 544L160 544C124.7 544 96 515.3 96 480L96 192C96 156.7 124.7 128 160 128L192 128L192 88C192 74.7 202.7 64 216 64zM216 176L160 176C151.2 176 144 183.2 144 192L144 240L496 240L496 192C496 183.2 488.8 176 480 176L216 176zM144 288L144 480C144 488.8 151.2 496 160 496L480 496C488.8 496 496 488.8 496 480L496 288L144 288z"/></svg>
+                        <span>{{ alert.created_at|format_datetime(pattern='d MMMM y', locale='fr') }}</span>
+                    </div>
+                    <twig:TerciaryButton 
+                        label="Voir les détails"
+                        class="font-medium text-lg"
+                        direction="right"
+                    />
+                </div>
             </article>
             {% else %}
                 <p>Aucune alerte active.</p>
