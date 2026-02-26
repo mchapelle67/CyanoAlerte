@@ -50,10 +50,10 @@
             {% set toxicityLevel = alert.toxicity_level.level|default(0) %}
             {% set toxicityLabel = toxicityLevel == 3 ? 'Élevé' : (toxicityLevel == 2 ? 'Moyen' : (toxicityLevel == 1 ? 'Faible' : 'Non défini')) %}
             {% set toxicityClass = toxicityLevel == 3 ? 'bg-red-100 text-red-700 border-red-200' : (toxicityLevel == 2 ? 'bg-orange-100 text-orange-700 border-orange-200' : (toxicityLevel == 1 ? 'bg-green-100 text-green-700 border-green-200' : 'bg-slate-100 text-slate-600 border-slate-200')) %}
-            <article class="mx-10 mb-4 p-5 text-gray-700 bg-white custom-border border border-gray-200 hover:shadow-xl transition-all duration-300 space-y-4">
+            <article class="group mx-10 mb-6 p-5 text-gray-700 bg-white custom-border border border-gray-200 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 space-y-4">
                 <div class="flex items-start justify-between gap-3">
                     <h2 class="custom-h3 leading-tight">{{ alert.waterbody.name ?? 'Nom inconnu' }}</h2>
-                    <span class="inline-flex items-center px-3 py-1.5 rounded-full text-sm font-semibold border {{ toxicityClass }}">{{ toxicityLabel }}</span>
+                    <span class="inline-flex items-center px-3 py-1.5 rounded-full text-sm font-semibold border transition-transform duration-300 group-hover:scale-105 {{ toxicityClass }}">{{ toxicityLabel }}</span>
                 </div>
                 <div class="flex items-center gap-2 text-gray-700">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 sm:w-6 sm:h-6 shrink-0 text-gray-600" viewBox="0 0 24 24" fill="none" aria-hidden="true">
