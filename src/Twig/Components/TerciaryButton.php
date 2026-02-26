@@ -8,7 +8,7 @@ use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 class TerciaryButton
 {
     public string $label = 'Retour';
-    public string $type = 'button';
     public string $class = '';
     public string $direction = 'left';
+    public string $href = '#';
 }

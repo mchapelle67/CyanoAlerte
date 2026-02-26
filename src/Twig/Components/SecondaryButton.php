@@ -8,6 +8,6 @@ use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 class SecondaryButton
 {
     public string $text = 'Découvrir';
-    public string $type = 'button';
     public string $class = '';
+    public string $href = '#';
 }
