@@ -20,21 +20,25 @@ class HomeApiClient
                 'Accept' => 'application/json',
             ],
             'query' => [
-                'order[created_at]' => 'desc',
+                'order[created_at]' => 'DESC',
                 'itemsPerPage' => 100,
             ],
         ]);
 
         $data = $response->toArray(false);
+        $alerts = $data['hydra:member'] ?? $data['member'] ?? $data;
 
-        if (isset($data['hydra:member']) && is_array($data['hydra:member'])) {
-            return $data['hydra:member'];
+        if (!is_array($alerts) || !array_is_list($alerts)) {
+            return [];
         }
 
-        if (isset($data['member']) && is_array($data['member'])) {
-            return $data['member'];
-        }
+        usort($alerts, static function (array $left, array $right): int {
+            $leftTimestamp = isset($left['created_at']) ? strtotime((string) $left['created_at']) : 0;
+            $rightTimestamp = isset($right['created_at']) ? strtotime((string) $right['created_at']) : 0;
 
-        return is_array($data) && array_is_list($data) ? $data : [];
+            return $rightTimestamp <=> $leftTimestamp;
+        });
+
+        return $alerts;
     }
 }
