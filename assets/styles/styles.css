@@ -14,8 +14,11 @@
     #wrapper {
         @apply w-full bg-blue-50 min-h-screen;
     }
-    .custom-h1 {
+    .custom-h1-hero {
         @apply text-7xl font-medium;
+    }
+    .custom-h1 {
+        @apply text-5xl font-medium;
     }
     .custom-h2 {
         @apply text-2xl;
