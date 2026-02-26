@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Repository\AlertRepository;
 use App\Service\AlertsDataProvider;
 use App\Service\FormService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -35,10 +34,29 @@ final class AlertController extends AbstractController
     }
 
     #[Route('/alerte/{id}', name: 'app_alert_detail', requirements: ['id' => '\\d+'])]
-    public function alertDetail(Request $request, AlertRepository $alertRepository): Response
+    public function alertDetail(FormService $formService, AlertsDataProvider $alertsDataProvider, Request $request): Response
     {
+        $result = $formService->handleAlertForm($request);
+
+        if ($result['success']) {
+            $this->addFlash('success', $result['message']);
+            return $this->redirectToRoute('app_home');
+        }
+
+        if ($result['message']) {
+            $this->addFlash('error', $result['message']);
+        }
+
         $id = $request->attributes->get('id');
-        $alert = $alertRepository->find($id);
+        $alertsData = $alertsDataProvider->getAlertsData();
+        $alert = null;
+
+        foreach ($alertsData['alerts'] as $item) {
+            if ((int) ($item['id'] ?? 0) === (int) $id) {
+                $alert = $item;
+                break;
+            }
+        }
 
         if (!$alert) {
             $this->addFlash('error', 'Alerte inconnue.');
@@ -48,7 +66,8 @@ final class AlertController extends AbstractController
         return $this->render('alert/alertDetail.html.twig', [
             'controller_name' => 'AlertController',
             'id' => $id,
-            'alert' => $alert
+            'alert_form' => $result['form']->createView(),
+            'alert' => $alert,
         ]);
     }
 }

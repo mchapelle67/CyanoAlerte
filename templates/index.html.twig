@@ -41,10 +41,12 @@
                    <twig:PrimaryButton 
                         text="Découvrir la carte"
                         class="font-medium text-lg hover:-translate-y-1"
+                        href="{{ path('app_home') }}#map"
                     />
                    <twig:SecondaryButton 
                         text="Voir les alertes"
                         class="font-medium text-lg"
+                        href="{{ path('app_alerts') }}"
                     />
                 </div>
             </div>
@@ -83,6 +85,7 @@
                    <twig:PrimaryButton 
                         text="Toutes les alertes"
                         class="mx-auto font-medium mt-8 mb-4 hover:-translate-y-1"
+                        href="{{ path('app_alerts') }}"
                     />
                 {% else %}
                     <p class="text-center text-gray-600 py-6 border-t-2">

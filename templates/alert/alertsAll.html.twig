@@ -12,6 +12,7 @@
         <twig:TerciaryButton 
             label="Retour à l'accueil"
             class="font-medium text-lg"
+            href="{{ path('app_home') }}"
         />
     </section>
     <section class="relative h-1/3 w-full flex items-center">
@@ -73,6 +74,7 @@
                         label="Voir les détails"
                         class="font-medium text-lg"
                         direction="right"
+                        href="{{ path('app_alert_detail', { id: alert.id }) }}"
                     />
                 </div>
             </article>

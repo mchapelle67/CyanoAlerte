@@ -1,7 +1,7 @@
 <header>
   <nav aria-label="Global" class="flex items-center justify-between p-3 lg:px-8 bg-white shadow-md relative z-10">
         <div class="flex lg:flex-1">
-          <a href="#" class="-m-1.5 p-1.5 flex items-center gap-3">
+          <a href="{{ path('app_home') }}" class="-m-1.5 p-1.5 flex items-center gap-3">
             <img src="{{ asset('images/logo.png')}}" alt="Logo Cyanoalerte" class="max-h-20 w-auto" />
             <div class="flex flex-col">
               <span class="text-xl font-semibold text-gray-800">CyanoAlerte</span>
@@ -17,9 +17,9 @@
           </button>
         </div>
         <ul class="hidden lg:flex lg:gap-x-12" role="list">
-          <li><a href="#" class="text-lg text-gray-600 nav-gradient">Accueil</a></li>
-          <li><a href="#" class="text-lg text-gray-600 nav-gradient">Carte</a></li>
-          <li><a href="#" class="text-lg text-gray-600 nav-gradient">Voir les alertes</a></li>
+          <li><a href="{{ path('app_home') }}" class="text-lg text-gray-600 nav-gradient">Accueil</a></li>
+          <li><a href="{{ path('app_home') }}#map" class="text-lg text-gray-600 nav-gradient">Carte</a></li>
+          <li><a href="{{ path('app_alerts') }}" class="text-lg text-gray-600 nav-gradient">Voir les alertes</a></li>
         </ul>
         <div class="hidden lg:flex lg:flex-1 lg:justify-end gap-6">
           <button type="button" class="flex gap-2 items-center text-lg text-gray-600 nav-login">
@@ -49,9 +49,9 @@
               <div class="mt-6 flow-root">
                 <div class="-my-6 divide-y divide-gray-400">
                   <ul class="space-y-2 py-6" role="list">
-                    <li><a href="#" class="mx-3 block rounded-lg px-3 py-2 text-2xl text-gray-600 hover:bg-white/5">Accueil</a></li>
-                    <li><a href="#" class="mx-3 block rounded-lg px-3 py-2 text-2xl text-gray-600 hover:bg-white/5">Carte</a></li>
-                    <li><a href="#" class="mx-3 block rounded-lg px-3 py-2 text-2xl text-gray-600 hover:bg-white/5">Voir les alertes</a></li>
+                    <li><a href="{{ path('app_home') }}" class="mx-3 block rounded-lg px-3 py-2 text-2xl text-gray-600 hover:bg-white/5">Accueil</a></li>
+                    <li><a href="{{ path('app_home') }}#map" class="mx-3 block rounded-lg px-3 py-2 text-2xl text-gray-600 hover:bg-white/5">Carte</a></li>
+                    <li><a href="{{ path('app_alerts') }}" class="mx-3 block rounded-lg px-3 py-2 text-2xl text-gray-600 hover:bg-white/5">Voir les alertes</a></li>
                   </ul>
                   <div class="py-6 flex gap-3">
                     <button type="button" class="text-lg text-gray-600 nav-login">
