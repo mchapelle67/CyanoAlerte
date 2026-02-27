@@ -109,7 +109,7 @@
                     <p class="text-gray-600 mt-2">Aucune photo disponible pour ce signalement.</p>
                 {% endif %}
             </article>
-            <article class="alert-container w-1/2">
+            <article class="alert-container w-1/2 flex flex-col">
                 <h2 class="custom-h3 text-green-900 flex items-center gap-2 mb-8">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-7 sm:w-7 sm:h-8 shrink-0 text-green-900" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                         <path d="M12 21s-6-4.35-6-10a6 6 0 1 1 12 0c0 5.65-6 10-6 10z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
@@ -120,16 +120,14 @@
                 {% if alert.waterbody.latitude is defined and alert.waterbody.longitude is defined %}
                     {% set lat = alert.waterbody.latitude|replace({',': '.'}) %}
                     {% set lng = alert.waterbody.longitude|replace({',': '.'}) %}
-                    <div class="relative">
+                    <div class="relative flex-1 min-h-[20rem] overflow-hidden rounded-lg">
                         <iframe 
-                            width="100%" 
-                            height="300" 
+                            class="absolute inset-0 w-full h-full border-0"
                             frameborder="0" 
                             scrolling="no" 
                             marginheight="0" 
                             marginwidth="0" 
                             src="https://www.openstreetmap.org/export/embed.html?bbox={{ lng - 0.05 }},{{ lat - 0.05 }},{{ lng + 0.05 }},{{ lat + 0.05 }}&layer=mapnik&marker={{ lat }},{{ lng }}"
-                            style="border-radius: 10px;"
                         ></iframe>
                         <a
                             href="https://www.google.com/maps?q={{ lat }},{{ lng }}"
