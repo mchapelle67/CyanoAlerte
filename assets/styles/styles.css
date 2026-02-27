@@ -5,7 +5,7 @@
     html {
         @apply scroll-smooth bg-blue-50;
     }
-    nav, button, h1, h2, h3, h4, h5, h6 {
+    nav, footer {
         @apply font-display;
     }
     a {
@@ -15,10 +15,10 @@
         @apply w-full bg-blue-50 min-h-screen;
     }
     .custom-h1-hero {
-        @apply text-7xl font-medium;
+        @apply text-7xl font-medium font-display;
     }
     .custom-h1 {
-        @apply text-5xl font-medium;
+        @apply text-5xl font-medium font-display;
     }
     .custom-h2 {
         @apply text-2xl;
@@ -37,5 +37,14 @@
     }
     .card-hover {
         @apply transition-transform duration-300 hover:scale-105;
+    }
+    .hero {
+        @apply relative h-screen w-full flex items-center;
+    }
+    .hero-figure {
+        @apply absolute top-0 left-0 w-full h-full z-0;
+    }
+    .hero-content {
+        @apply relative z-10 max-w-5xl mx-auto text-center flex flex-col justify-center items-center px-5;
     }
 }

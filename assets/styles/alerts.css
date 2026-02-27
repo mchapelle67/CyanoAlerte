@@ -18,4 +18,7 @@
     .neutrecolor {
         @apply bg-slate-50 border-slate-200 text-slate-800;
     }
+    .alert-container {
+        @apply mx-10 p-8 text-gray-700 bg-white custom-border border border-gray-200;
+    }
 }

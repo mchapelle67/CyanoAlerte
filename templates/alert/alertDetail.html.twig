@@ -7,12 +7,69 @@
 {% block title %}CyanoAlerte - Surveillance des Cyanobactéries{% endblock %}
 
 {% block body %}
-<main>
-    <span class="">Retour à la liste d'alertes</span>
-
-    <section class="">
-
+<main id="wrapper">
+    <section class="bg-white/90 backdrop-blur-sm p-4 border-b border-gray-100">
+    <twig:TerciaryButton 
+        label="Retour à la liste d'alertes"
+        class="font-medium text-lg"
+        href="{{ path('app_alerts') }}"
+    />
+    </section>
+    <section class="custom-padding space-y-4">
+        <article class="mx-10 p-5 text-gray-700"> 
+            <div class="flex items-start justify-between mb-2">
+                <h1 class="custom-h2 leading-tight">{{ alert.waterbody.name ?? 'Nom inconnu' }}</h1>
+                {{ include('components/Badge/ToxicityBadge.html.twig', {
+                    level: alert.toxicity_level.level|default(0),
+                    extraClass: 'transition-transform duration-300 group-hover:scale-105 text-lg'
+                }) }}
+            </div>
+            <div class="flex items-center gap-1 text-gray-700 mb-6">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 sm:w-6 sm:h-6 shrink-0 text-gray-600" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M12 21s-6-4.35-6-10a6 6 0 1 1 12 0c0 5.65-6 10-6 10z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                    <circle cx="12" cy="11" r="2.5" stroke="currentColor" stroke-width="1.8"/>
+                </svg>
+                <span class="text-lg leading-6">{{ alert.waterbody.city ?? 'Ville non renseignée' }}, {{ alert.waterbody.department ?? 'Département non renseigné' }} <span class="mx-2 text-gray-400 text-xs">•</span> {{ alert.waterbody.type.type ?? 'Type de plan d\'eau inconnu' }}</span>
+            </div>
+        </article>
+        <article class="alert-container"> 
+            <div class="space-y-4 mb-8"> 
+                <h2 class="custom-h3 text-green-900 flex items-center gap-2 mb-8">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 shrink-0" viewBox="0 0 640 640"><!--!Font Awesome Free v7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M320 576C178.6 576 64 461.4 64 320C64 178.6 178.6 64 320 64C461.4 64 576 178.6 576 320C576 461.4 461.4 576 320 576zM320 112C205.1 112 112 205.1 112 320C112 434.9 205.1 528 320 528C434.9 528 528 434.9 528 320C528 205.1 434.9 112 320 112zM320 448C302.3 448 288 433.7 288 416C288 398.3 302.3 384 320 384C337.7 384 352 398.3 352 416C352 433.7 337.7 448 320 448zM320 192C338.2 192 352.7 207.5 351.4 225.7L344 329.7C343.1 342.3 332.6 352 320.1 352C307.5 352 297.1 342.3 296.2 329.7L288.8 225.7C287.3 207.5 301.8 192 320 192z"/></svg>
+                    Informations principales
+                </h2>
+                <span class="font-medium text-lg text-gray-900">Description</span>
+                <p>{{ alert.description ?? 'Description non renseignée' }}</p>
+            </div>
+            <hr class="border-gray-200 mb-4">
+            <div class="flex flex-wrap items-end justify-between gap-6">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-12">
+                    <div class="text-gray-700">
+                        <h3 class="mb-2 font-medium text-base text-gray-900 flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 sm:w-6 sm:h-6 shrink-0" viewBox="0 0 640 640"><!--!Font Awesome Free v7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path fill="#4b5563" d="M216 64C229.3 64 240 74.7 240 88L240 128L400 128L400 88C400 74.7 410.7 64 424 64C437.3 64 448 74.7 448 88L448 128L480 128C515.3 128 544 156.7 544 192L544 480C544 515.3 515.3 544 480 544L160 544C124.7 544 96 515.3 96 480L96 192C96 156.7 124.7 128 160 128L192 128L192 88C192 74.7 202.7 64 216 64zM216 176L160 176C151.2 176 144 183.2 144 192L144 240L496 240L496 192C496 183.2 488.8 176 480 176L216 176zM144 288L144 480C144 488.8 151.2 496 160 496L480 496C488.8 496 496 488.8 496 480L496 288L144 288z"/></svg>
+                            Date du signalement
+                        </h3>
+                        <span>{{ alert.created_at|format_datetime(pattern='d MMMM y à H:m', locale='fr') }}</span>
+                    </div>
+                    <div class="text-gray-700">
+                        <h3 class="mb-2 font-medium text-base text-gray-900 flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 sm:w-6 sm:h-6 shrink-0"  viewBox="0 0 640 640"><!--!Font Awesome Free v7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path fill="#4b5563" d="M320 64C334.7 64 348.2 72.1 355.2 85L571.2 485C577.9 497.4 577.6 512.4 570.4 524.5C563.2 536.6 550.1 544 536 544L104 544C89.9 544 76.8 536.6 69.6 524.5C62.4 512.4 62.1 497.4 68.8 485L284.8 85C291.8 72.1 305.3 64 320 64zM320 416C302.3 416 288 430.3 288 448C288 465.7 302.3 480 320 480C337.7 480 352 465.7 352 448C352 430.3 337.7 416 320 416zM320 224C301.8 224 287.3 239.5 288.6 257.7L296 361.7C296.9 374.2 307.4 384 319.9 384C332.5 384 342.9 374.3 343.8 361.7L351.2 257.7C352.5 239.5 338.1 224 319.8 224z"/></svg> 
+                            Niveau d'alerte
+                        </h3>
+                        <span>{{ alert.toxicity_level.level|toxicity_label }}</span>
+                    </div>
+                </div>
+                <button class="inline-flex items-center mx-6 py-2 px-4 rounded-lg border border-red-600 transition-all duration-300 ease-out font-medium text-red-600 hover:ring-2 hover:ring-red-300/60 hover:ring-offset-2 hover:ring-offset-white">
+                    Signaler    
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 ml-2 shrink-0" viewBox="0 0 640 640"><!--!Font Awesome Free v7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M144 88C144 74.7 133.3 64 120 64C106.7 64 96 74.7 96 88L96 552C96 565.3 106.7 576 120 576C133.3 576 144 565.3 144 552L144 452L224.3 431.9C265.4 421.6 308.9 426.4 346.8 445.3C391 467.4 442.3 470.1 488.5 452.7L523.2 439.7C535.7 435 544 423.1 544 409.7L544 130C544 107 519.8 92 499.2 102.3L489.6 107.1C443.3 130.3 388.8 130.3 342.5 107.1C307.4 89.5 267.1 85.1 229 94.6L144 116L144 88zM144 165.5L240.6 141.3C267.6 134.6 296.1 137.7 321 150.1C375.9 177.5 439.7 179.8 496 156.9L496 398.7L471.6 407.8C437.9 420.4 400.4 418.5 368.2 402.4C320 378.3 264.9 372.3 212.6 385.3L144 402.5L144 165.5z"/></svg>
+                </button>
+            </div>
+        </article>
+        <article></article>
     </section>
 </main>
+
+
+
 
 {% endblock %}
