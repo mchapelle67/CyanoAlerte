@@ -48,16 +48,9 @@ class Waterbody
     #[ORM\OneToMany(targetEntity: Alert::class, mappedBy: 'waterbody', orphanRemoval: true)]
     private Collection $alerts;
 
-    /**
-     * @var Collection<int, Picture>
-     */
-    #[ORM\OneToMany(targetEntity: Picture::class, mappedBy: 'Waterbody', cascade: ['persist'], orphanRemoval: true)]
-    private Collection $pictures;
-
     public function __construct()
     {
         $this->alerts = new ArrayCollection();
-        $this->pictures = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -161,36 +154,6 @@ class Waterbody
             // set the owning side to null (unless already changed)
             if ($alert->getWaterbody() === $this) {
                 $alert->setWaterbody(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Picture>
-     */
-    public function getPictures(): Collection
-    {
-        return $this->pictures;
-    }
-
-    public function addPicture(Picture $picture): static
-    {
-        if (!$this->pictures->contains($picture)) {
-            $this->pictures->add($picture);
-            $picture->setWaterbody($this);
-        }
-
-        return $this;
-    }
-
-    public function removePicture(Picture $picture): static
-    {
-        if ($this->pictures->removeElement($picture)) {
-            // set the owning side to null (unless already changed)
-            if ($picture->getWaterbody() === $this) {
-                $picture->setWaterbody(null);
             }
         }
 

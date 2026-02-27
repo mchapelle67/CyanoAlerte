@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\RateLimiter\RateLimiterFactory;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 
@@ -147,7 +148,7 @@ class FormService
                                 // on crée une nouvelle entité Photo
                 $photo = new Picture();
                 $photo->setUrl($newFilename);
-                $alert->getWaterbody()->addPicture($photo);
+                                $alert->addPicture($photo);
             }
         }
         return null; 

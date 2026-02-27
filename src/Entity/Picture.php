@@ -4,23 +4,28 @@ namespace App\Entity;
 
 use App\Repository\PictureRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: PictureRepository::class)]
 class Picture
 {
+    #[Groups(['alert:read'])]
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Groups(['alert:read'])]
     #[ORM\Column(length: 255)]
     private ?string $url = null;
 
+    #[Groups(['alert:read'])]
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $alt = null;
 
     #[ORM\ManyToOne(inversedBy: 'pictures')]
-    private ?Waterbody $Waterbody = null;
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Alert $alert = null;
 
     public function getId(): ?int
     {
@@ -51,14 +56,14 @@ class Picture
         return $this;
     }
 
-    public function getWaterbody(): ?Waterbody
+    public function getAlert(): ?Alert
     {
-        return $this->Waterbody;
+        return $this->alert;
     }
 
-    public function setWaterbody(?Waterbody $Waterbody): static
+    public function setAlert(?Alert $alert): static
     {
-        $this->Waterbody = $Waterbody;
+        $this->alert = $alert;
 
         return $this;
     }
