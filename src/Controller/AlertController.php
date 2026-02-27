@@ -16,6 +16,7 @@ final class AlertController extends AbstractController
     {
         $result = $formService->handleAlertForm($request);
         $alertsData = $alertsDataProvider->getAlertsData();
+        $alertsData['alerts'] = $this->addSlugs($alertsData['alerts'] ?? []);
         
         if ($result['success']) {
             $this->addFlash('success', $result['message']);
@@ -33,7 +34,7 @@ final class AlertController extends AbstractController
         ]);
     }
 
-    #[Route('/alerte/{id}', name: 'app_alert_detail', requirements: ['id' => '\\d+'])]
+    #[Route('/alerte/{slug}', name: 'app_alert_detail')]
     public function alertDetail(FormService $formService, AlertsDataProvider $alertsDataProvider, Request $request): Response
     {
         $result = $formService->handleAlertForm($request);
@@ -47,12 +48,13 @@ final class AlertController extends AbstractController
             $this->addFlash('error', $result['message']);
         }
 
-        $id = $request->attributes->get('id');
+        $slug = (string) $request->attributes->get('slug');
         $alertsData = $alertsDataProvider->getAlertsData();
+        $alerts = $this->addSlugs($alertsData['alerts'] ?? []);
         $alert = null;
 
-        foreach ($alertsData['alerts'] as $item) {
-            if ((int) ($item['id'] ?? 0) === (int) $id) {
+        foreach ($alerts as $item) {
+            if (($item['detail_slug'] ?? null) === $slug) {
                 $alert = $item;
                 break;
             }
@@ -65,9 +67,45 @@ final class AlertController extends AbstractController
 
         return $this->render('alert/alertDetail.html.twig', [
             'controller_name' => 'AlertController',
-            'id' => $id,
+            'slug' => $slug,
             'alert_form' => $result['form']->createView(),
             'alert' => $alert,
         ]);
+    }
+
+    private function addSlugs(array $alerts): array
+    {
+        foreach ($alerts as $index => $alert) {
+            if (is_array($alert)) {
+                $alerts[$index]['detail_slug'] = $this->makeSlug($alert);
+            }
+        }
+
+        return $alerts;
+    }
+
+    private function makeSlug(array $alert): string
+    {
+        $waterbody = is_array($alert['waterbody'] ?? null) ? $alert['waterbody'] : [];
+        $name = (string) ($waterbody['name'] ?? 'plan-eau');
+        $department = (string) ($waterbody['department'] ?? 'departement');
+
+        try {
+            $createdAt = new \DateTimeImmutable((string) ($alert['created_at'] ?? 'now'));
+            $timestamp = $createdAt->format('Y-m-d-H-i-s');
+        } catch (\Exception) {
+            $timestamp = 'date-inconnue';
+        }
+
+        $parts = [$name, $department, $timestamp];
+        $parts = array_map(static function (string $value): string {
+            $ascii = iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $value);
+            $normalized = strtolower($ascii !== false ? $ascii : $value);
+            $slug = preg_replace('/[^a-z0-9]+/', '-', $normalized) ?? '';
+
+            return trim($slug, '-') ?: 'inconnu';
+        }, $parts);
+
+        return implode('-', $parts);
     }
 }
