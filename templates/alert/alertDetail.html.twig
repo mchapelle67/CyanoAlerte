@@ -80,12 +80,30 @@
                         {% for picture in photos %}
                             {% set pictureUrl = picture.url is defined ? picture.url : picture %}
                             {% set imageSrc = pictureUrl starts with 'http' ? pictureUrl : (pictureUrl starts with 'uploads/' ? asset(pictureUrl) : asset('uploads/photos/' ~ pictureUrl)) %}
-                            <img 
-                                src="{{ imageSrc }}"
-                                alt="Photo du signalement {{ loop.index }}"
-                                class="object-cover w-full h-48 rounded-lg border border-gray-200 shadow-sm"
+                            <button
+                                type="button"
+                                data-photo-thumb
+                                data-photo-index="{{ loop.index0 }}"
+                                data-photo-src="{{ imageSrc }}"
+                                data-photo-alt="Photo du signalement {{ loop.index }}"
+                                class="block w-full rounded-lg overflow-hidden border border-gray-200 shadow-sm card-hover focus:outline-none focus:ring-2 focus:ring-blue-500"
                             >
+                                <img 
+                                    src="{{ imageSrc }}"
+                                    alt="Photo du signalement {{ loop.index }}"
+                                    class="object-cover w-full h-48"
+                                >
+                            </button>
                         {% endfor %}
+                    </div>
+                    <div id="photo-lightbox" class="fixed inset-0 z-50 hidden bg-black/80 p-4 sm:p-8" aria-hidden="true">
+                        <div class="relative flex h-full w-full items-center justify-center">
+                            <button type="button" id="photo-lightbox-close" class="absolute right-2 top-2 sm:right-4 sm:top-4 inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20" aria-label="Fermer">✕</button>
+                            <button type="button" id="photo-lightbox-prev" class="absolute left-2 sm:left-4 rounded-full bg-white/10 px-3 py-2 text-white hover:bg-white/20" aria-label="Photo précédente">←</button>
+                            <img id="photo-lightbox-image" src="" alt="" class="max-h-[85vh] w-auto max-w-full rounded-lg border border-white/20 object-contain shadow-2xl">
+                            <button type="button" id="photo-lightbox-next" class="absolute right-2 sm:right-4 rounded-full bg-white/10 px-3 py-2 text-white hover:bg-white/20" aria-label="Photo suivante">→</button>
+                            <div id="photo-lightbox-counter" class="absolute bottom-3 rounded-full bg-white/10 px-3 py-1 text-sm text-white"></div>
+                        </div>
                     </div>
                 {% else %}
                     <p class="text-gray-600 mt-2">Aucune photo disponible pour ce signalement.</p>
@@ -287,4 +305,82 @@
         </section>
     </section>
 </main>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const thumbnails = Array.from(document.querySelectorAll('[data-photo-thumb]'));
+    const lightbox = document.getElementById('photo-lightbox');
+
+    if (!thumbnails.length || !lightbox) {
+        return;
+    }
+
+    const image = document.getElementById('photo-lightbox-image');
+    const closeBtn = document.getElementById('photo-lightbox-close');
+    const prevBtn = document.getElementById('photo-lightbox-prev');
+    const nextBtn = document.getElementById('photo-lightbox-next');
+    const counter = document.getElementById('photo-lightbox-counter');
+    const photos = thumbnails.map((thumb) => ({
+        src: thumb.dataset.photoSrc,
+        alt: thumb.dataset.photoAlt || ''
+    }));
+
+    let currentIndex = 0;
+
+    function renderPhoto(index) {
+        currentIndex = (index + photos.length) % photos.length;
+        image.src = photos[currentIndex].src;
+        image.alt = photos[currentIndex].alt;
+        counter.textContent = `${currentIndex + 1} / ${photos.length}`;
+
+        const hasMultiple = photos.length > 1;
+        prevBtn.classList.toggle('hidden', !hasMultiple);
+        nextBtn.classList.toggle('hidden', !hasMultiple);
+    }
+
+    function openLightbox(index) {
+        renderPhoto(index);
+        lightbox.classList.remove('hidden');
+        lightbox.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('overflow-hidden');
+    }
+
+    function closeLightbox() {
+        lightbox.classList.add('hidden');
+        lightbox.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('overflow-hidden');
+    }
+
+    thumbnails.forEach((thumb, index) => {
+        thumb.addEventListener('click', () => openLightbox(index));
+    });
+
+    closeBtn.addEventListener('click', closeLightbox);
+    prevBtn.addEventListener('click', () => renderPhoto(currentIndex - 1));
+    nextBtn.addEventListener('click', () => renderPhoto(currentIndex + 1));
+
+    lightbox.addEventListener('click', (event) => {
+        if (event.target === lightbox) {
+            closeLightbox();
+        }
+    });
+
+    document.addEventListener('keydown', (event) => {
+        if (lightbox.classList.contains('hidden')) {
+            return;
+        }
+
+        if (event.key === 'Escape') {
+            closeLightbox();
+        }
+
+        if (event.key === 'ArrowLeft') {
+            renderPhoto(currentIndex - 1);
+        }
+
+        if (event.key === 'ArrowRight') {
+            renderPhoto(currentIndex + 1);
+        }
+    });
+});
+</script>
 {% endblock %}
