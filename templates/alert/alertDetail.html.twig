@@ -15,7 +15,10 @@
         href="{{ path('app_alerts') }}"
     />
     </section>
-    <section class="custom-padding space-y-4">
+    <div class="space-y-4">
+        {% include 'sections/_flashMessages.html.twig' %}
+    </div>
+    <section class="custom-padding space-y-8">
         <article class="mx-10 p-5 text-gray-700"> 
             <div class="flex items-start justify-between mb-2">
                 <h1 class="custom-h2 leading-tight">{{ alert.waterbody.name ?? 'Nom inconnu' }}</h1>
@@ -35,7 +38,7 @@
         <article class="alert-container"> 
             <div class="space-y-4 mb-8"> 
                 <h2 class="custom-h3 text-green-900 flex items-center gap-2 mb-8">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 shrink-0" viewBox="0 0 640 640"><!--!Font Awesome Free v7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M320 576C178.6 576 64 461.4 64 320C64 178.6 178.6 64 320 64C461.4 64 576 178.6 576 320C576 461.4 461.4 576 320 576zM320 112C205.1 112 112 205.1 112 320C112 434.9 205.1 528 320 528C434.9 528 528 434.9 528 320C528 205.1 434.9 112 320 112zM320 448C302.3 448 288 433.7 288 416C288 398.3 302.3 384 320 384C337.7 384 352 398.3 352 416C352 433.7 337.7 448 320 448zM320 192C338.2 192 352.7 207.5 351.4 225.7L344 329.7C343.1 342.3 332.6 352 320.1 352C307.5 352 297.1 342.3 296.2 329.7L288.8 225.7C287.3 207.5 301.8 192 320 192z"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 shrink-0" viewBox="0 0 640 640"><!--!Font Awesome Free v7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M320 576C178.6 576 64 461.4 64 320C64 178.6 178.6 64 320 64C461.4 64 576 178.6 576 320C576 461.4 461.4 576 320 576zM320 112C205.1 112 112 205.1 112 320C112 434.9 205.1 528 320 528C434.9 528 528 434.9 528 320C528 205.1 434.9 112 320 112zM320 448C302.3 448 288 433.7 288 416C288 398.3 302.3 384 320 384C337.7 384 352 398.3 352 416C352 433.7 337.7 448 320 448zM320 192C338.2 192 352.7 207.5 351.4 225.7L344 329.7C343.1 342.3 332.6 352 320.1 352C307.5 352 297.1 342.3 296.2 329.7L288.8 225.7C287.3 207.5 301.8 192 320 192z"/></svg>
                     Informations principales
                 </h2>
                 <span class="font-medium text-lg text-gray-900">Description</span>
@@ -65,11 +68,137 @@
                 </button>
             </div>
         </article>
-        <article></article>
+            <section class="flex flex-colum sm:flew-row">
+            {% set photos = alert.waterbody.pictures|default(alert.pictures|default(alert.picture|default([]))) %}
+            <article class="alert-container w-1/2"> 
+                    <h2 class="custom-h3 text-green-900 flex items-center gap-2 mb-8">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 shrink-0" viewBox="0 0 640 640"><!--!Font Awesome Free v7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M257.1 96C238.4 96 220.9 105.4 210.5 120.9L184.5 160L128 160C92.7 160 64 188.7 64 224L64 480C64 515.3 92.7 544 128 544L512 544C547.3 544 576 515.3 576 480L576 224C576 188.7 547.3 160 512 160L455.5 160L429.5 120.9C419.1 105.4 401.6 96 382.9 96L257.1 96zM250.4 147.6C251.9 145.4 254.4 144 257.1 144L382.8 144C385.5 144 388 145.3 389.5 147.6L422.7 197.4C427.2 204.1 434.6 208.1 442.7 208.1L512 208.1C520.8 208.1 528 215.3 528 224.1L528 480.1C528 488.9 520.8 496.1 512 496.1L128 496C119.2 496 112 488.8 112 480L112 224C112 215.2 119.2 208 128 208L197.3 208C205.3 208 212.8 204 217.3 197.3L250.5 147.5zM320 448C381.9 448 432 397.9 432 336C432 274.1 381.9 224 320 224C258.1 224 208 274.1 208 336C208 397.9 258.1 448 320 448zM256 336C256 300.7 284.7 272 320 272C355.3 272 384 300.7 384 336C384 371.3 355.3 400 320 400C284.7 400 256 371.3 256 336z"/></svg>
+                        Photos ({{ photos|length }})
+                    </h2>
+                {% if photos|length > 0 %}
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-4">
+                        {% for picture in photos %}
+                            {% set pictureUrl = picture.url is defined ? picture.url : picture %}
+                            <img 
+                                src="{{ asset('uploads/' ~ pictureUrl) }}"
+                                alt="Photo du signalement {{ loop.index }}"
+                                class="object-cover w-full h-48 rounded-lg border border-gray-200 shadow-sm"
+                            >
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p class="text-gray-600 mt-2">Aucune photo disponible pour ce signalement.</p>
+                {% endif %}
+            </article>
+            <article class="alert-container w-1/2">
+                <h2 class="custom-h3 text-green-900 flex items-center gap-2 mb-8">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-7 sm:w-7 sm:h-8 shrink-0 text-green-900" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <path d="M12 21s-6-4.35-6-10a6 6 0 1 1 12 0c0 5.65-6 10-6 10z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                        <circle cx="12" cy="11" r="2.5" stroke="currentColor" stroke-width="1.8"/>
+                    </svg>
+                    Localisation
+                </h2>             
+                {% if alert.waterbody.latitude is defined and alert.waterbody.longitude is defined %}
+                    {% set lat = alert.waterbody.latitude|replace({',': '.'}) %}
+                    {% set lng = alert.waterbody.longitude|replace({',': '.'}) %}
+                    <div class="relative">
+                        <iframe 
+                            width="100%" 
+                            height="300" 
+                            frameborder="0" 
+                            scrolling="no" 
+                            marginheight="0" 
+                            marginwidth="0" 
+                            src="https://www.openstreetmap.org/export/embed.html?bbox={{ lng - 0.05 }},{{ lat - 0.05 }},{{ lng + 0.05 }},{{ lat + 0.05 }}&layer=mapnik&marker={{ lat }},{{ lng }}"
+                            style="border-radius: 10px;"
+                        ></iframe>
+                        <a
+                            href="https://www.google.com/maps?q={{ lat }},{{ lng }}"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="absolute bottom-3 left-3 z-10 inline-flex items-center rounded-md bg-blue-700 px-3 py-1.5 text-sm font-medium text-white shadow-sm hover:bg-blue-800"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" class="mr-2" height="14" width="14" viewBox="0 0 640 640"><!--!Font Awesome Free v7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path fill="rgb(255, 255, 255)" d="M541.9 139.5C546.4 127.7 543.6 114.3 534.7 105.4C525.8 96.5 512.4 93.6 500.6 98.2L84.6 258.2C71.9 263 63.7 275.2 64 288.7C64.3 302.2 73.1 314.1 85.9 318.3L262.7 377.2L321.6 554C325.9 566.8 337.7 575.6 351.2 575.9C364.7 576.2 376.9 568 381.8 555.4L541.8 139.4z"/></svg>
+                            Ouvrir
+                        </a>
+                    </div>
+                {% else %}
+                    <p class="text-gray-600 mt-2">Coordonnées de localisation non disponibles pour ce signalement.</p>
+                {% endif %}
+            </article>
+        </section>
+        <section class="flex flex-col sm:flex-row">
+            <article class="alert-container card-hover w-1/3">
+                <h2 class="flex itemps-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 shrink-0" viewBox="0 0 640 640"><!--!Font Awesome Free v7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M320 576C178.6 576 64 461.4 64 320C64 178.6 178.6 64 320 64C461.4 64 576 178.6 576 320C576 461.4 461.4 576 320 576zM320 112C205.1 112 112 205.1 112 320C112 434.9 205.1 528 320 528C434.9 528 528 434.9 528 320C528 205.1 434.9 112 320 112zM320 448C302.3 448 288 433.7 288 416C288 398.3 302.3 384 320 384C337.7 384 352 398.3 352 416C352 433.7 337.7 448 320 448zM320 192C338.2 192 352.7 207.5 351.4 225.7L344 329.7C343.1 342.3 332.6 352 320.1 352C307.5 352 297.1 342.3 296.2 329.7L288.8 225.7C287.3 207.5 301.8 192 320 192z"/></svg>
+                    À Propos des Cyanobactéries
+                </h2>
+                <div class="space-y-2">
+                    <h3 class="font-medium text-gray-900">Qu'est-ce que c'est ?</h3>
+                    <p>
+                        Les cyanobactéries sont des micro-organismes qui peuvent produire des toxines dangereuses pour la santé humaine et animale.
+                    </p>
+                    <h3 class="font-medium text-gray-900">Comment se développent-elles ?</h3>
+                    <p>
+                        Les cyanobactéries se développent principalement dans les eaux stagnantes et riches en nutriments, surtout par temps chaud et ensoleillé.
+                    </p>
+                </div>
+                <hr class="border-gray-200 my-6">
+                <p class="text-sm font-medium text-red-600">Urgence : contactez les autorités locales ou les services d'urgence.</p>
+            </article>
+            <article class="alert-container card-hover w-1/3">
+                <h2 class="flex itemps-center gap-2 text-green-900">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 shrink-0" viewBox="0 0 640 640"><!--!Font Awesome Free v7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M320 96C239.2 96 174.5 132.8 127.4 176.6C80.6 220.1 49.3 272 34.4 307.7C31.1 315.6 31.1 324.4 34.4 332.3C49.3 368 80.6 420 127.4 463.4C174.5 507.1 239.2 544 320 544C400.8 544 465.5 507.2 512.6 463.4C559.4 419.9 590.7 368 605.6 332.3C608.9 324.4 608.9 315.6 605.6 307.7C590.7 272 559.4 220 512.6 176.6C465.5 132.9 400.8 96 320 96zM176 320C176 240.5 240.5 176 320 176C399.5 176 464 240.5 464 320C464 399.5 399.5 464 320 464C240.5 464 176 399.5 176 320zM320 256C320 291.3 291.3 320 256 320C244.5 320 233.7 317 224.3 311.6C223.3 322.5 224.2 333.7 227.2 344.8C240.9 396 293.6 426.4 344.8 412.7C396 399 426.4 346.3 412.7 295.1C400.5 249.4 357.2 220.3 311.6 224.3C316.9 233.6 320 244.4 320 256z"/></svg>
+                    Signes à surveiller
+                </h2>
+                <div class="space-y-4 mt-4">
+                    <p class="flex items-center gap-4">
+                        <span class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-blue-100 text-blue-800">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 shrink-0" viewBox="0 0 640 640"><!--!Font Awesome Free v7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M320 96C239.2 96 174.5 132.8 127.4 176.6C80.6 220.1 49.3 272 34.4 307.7C31.1 315.6 31.1 324.4 34.4 332.3C49.3 368 80.6 420 127.4 463.4C174.5 507.1 239.2 544 320 544C400.8 544 465.5 507.2 512.6 463.4C559.4 419.9 590.7 368 605.6 332.3C608.9 324.4 608.9 315.6 605.6 307.7C590.7 272 559.4 220 512.6 176.6C465.5 132.9 400.8 96 320 96zM176 320C176 240.5 240.5 176 320 176C399.5 176 464 240.5 464 320C464 399.5 399.5 464 320 464C240.5 464 176 399.5 176 320zM320 256C320 291.3 291.3 320 256 320C244.5 320 233.7 317 224.3 311.6C223.3 322.5 224.2 333.7 227.2 344.8C240.9 396 293.6 426.4 344.8 412.7C396 399 426.4 346.3 412.7 295.1C400.5 249.4 357.2 220.3 311.6 224.3C316.9 233.6 320 244.4 320 256z"/></svg>
+                        </span>
+                        <span>Eau verdâtre ou bleu-vert</span>
+                    </p>
+                    <p class="flex items-center gap-4">
+                        <span class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-blue-100 text-blue-800">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 shrink-0" viewBox="0 0 640 640"><!--!Font Awesome Free v7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M474.6 188.1C495.3 203.7 520.6 218.8 548.8 222.6C561.9 224.4 574 215.1 575.8 202C577.6 188.9 568.3 176.8 555.2 175C539.3 172.9 522 163.7 503.5 149.8C465.1 120.8 413 120.8 374.5 149.8C350.5 167.9 333.8 176.1 320 176.1C306.2 176.1 289.5 167.9 265.5 149.8C227.1 120.8 175 120.8 136.5 149.8C118 163.7 100.7 172.9 84.8 175C71.7 176.8 62.4 188.8 64.2 202C66 215.2 78 224.4 91.2 222.6C119.4 218.8 144.8 203.7 165.4 188.1C186.7 172 215.3 172 236.6 188.1C260.8 206.4 288.9 224 320 224C351.1 224 379.1 206.3 403.4 188.1C424.7 172 453.3 172 474.6 188.1zM474.6 332.1C495.3 347.7 520.6 362.8 548.8 366.6C561.9 368.4 574 359.1 575.8 346C577.6 332.9 568.3 320.8 555.2 319C539.3 316.9 522 307.7 503.5 293.8C465.1 264.8 413 264.8 374.5 293.8C350.5 311.9 333.8 320.1 320 320.1C306.2 320.1 289.5 311.9 265.5 293.8C227.1 264.8 175 264.8 136.5 293.8C118 307.7 100.7 316.9 84.8 319C71.7 320.7 62.4 332.8 64.2 346C66 359.2 78 368.4 91.2 366.6C119.4 362.8 144.8 347.7 165.4 332.1C186.7 316 215.3 316 236.6 332.1C260.8 350.4 288.9 368 320 368C351.1 368 379.1 350.3 403.4 332.1C424.7 316 453.3 316 474.6 332.1zM403.4 476.1C424.7 460 453.3 460 474.6 476.1C495.3 491.7 520.6 506.8 548.8 510.6C561.9 512.4 574 503.1 575.8 490C577.6 476.9 568.3 464.8 555.2 463C539.3 460.9 522 451.7 503.5 437.8C465.1 408.8 413 408.8 374.5 437.8C350.5 455.9 333.8 464.1 320 464.1C306.2 464.1 289.5 455.9 265.5 437.8C227.1 408.8 175 408.8 136.5 437.8C118 451.7 100.7 460.9 84.8 463C71.7 464.8 62.4 476.8 64.2 490C66 503.2 78 512.4 91.2 510.6C119.4 506.8 144.8 491.7 165.4 476.1C186.7 460 215.3 460 236.6 476.1C260.8 494.4 288.9 512 320 512C351.1 512 379.1 494.3 403.4 476.1z"/></svg>
+                        </span>
+                        <span>Mousse ou écume</span>
+                    </p>
+                    <p class="flex items-center gap-4">
+                        <span class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-blue-100 text-blue-800">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 shrink-0"  viewBox="0 0 640 640"><!--!Font Awesome Free v7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M320 576C178.6 576 64 461.4 64 320C64 178.6 178.6 64 320 64C461.4 64 576 178.6 576 320C576 461.4 461.4 576 320 576zM320 112C205.1 112 112 205.1 112 320C112 434.9 205.1 528 320 528C434.9 528 528 434.9 528 320C528 205.1 434.9 112 320 112zM320 448C302.3 448 288 433.7 288 416C288 398.3 302.3 384 320 384C337.7 384 352 398.3 352 416C352 433.7 337.7 448 320 448zM320 192C338.2 192 352.7 207.5 351.4 225.7L344 329.7C343.1 342.3 332.6 352 320.1 352C307.5 352 297.1 342.3 296.2 329.7L288.8 225.7C287.3 207.5 301.8 192 320 192z"/></svg>
+                        </span>
+                        <span>Odeur désagréable</span>
+                    </p>
+                    <p class="flex items-center gap-4">
+                        <span class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-blue-100 text-blue-800">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 shrink-0" viewBox="0 0 640 640"><!--!Font Awesome Free v7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M320 64C324.6 64 329.2 65 333.4 66.9L521.8 146.8C543.8 156.1 560.2 177.8 560.1 204C559.6 303.2 518.8 484.7 346.5 567.2C329.8 575.2 310.4 575.2 293.7 567.2C121.3 484.7 80.6 303.2 80.1 204C80 177.8 96.4 156.1 118.4 146.8L306.7 66.9C310.9 65 315.4 64 320 64zM320 130.8L320 508.9C458 442.1 495.1 294.1 496 205.5L320 130.9L320 130.9z"/></svg>
+                        </span>
+                        <span>Texture visqueuse ou gélatineuse</span>
+                    </p>
+                </div>
+            </article>
+            <article class="alert-container card-hover w-1/3">
+                <h2 class="flex items-center gap-2 text-green-900">
+                    <svg xmlns="http://www.w3.org/2000/svg"  class="w-7 h-7 shrink-0"  viewBox="0 0 640 640"><!--!Font Awesome Free v7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M320 64C324.6 64 329.2 65 333.4 66.9L521.8 146.8C543.8 156.1 560.2 177.8 560.1 204C559.6 303.2 518.8 484.7 346.5 567.2C329.8 575.2 310.4 575.2 293.7 567.2C121.3 484.7 80.6 303.2 80.1 204C80 177.8 96.4 156.1 118.4 146.8L306.7 66.9C310.9 65 315.4 64 320 64zM320 130.8L320 508.9C458 442.1 495.1 294.1 496 205.5L320 130.9L320 130.9z"/></svg>
+                    Actions Recommandées
+                </h2>
+                <div class="space-y-4 mt-4">
+                    <div class="rounded-xl border p-4 highlevelcolor saturate-125">
+                        <h3 class="font-semibold mb-1">Évitez le Contact</h3>
+                        <p>Ne vous baignez pas et évitez tout contact avec l'eau suspecte</p>
+                    </div>
+                    <div class="rounded-xl border p-4 mediumlevelcolor saturate-125">
+                        <h3 class="font-semibold mb-1">Protégez vos Animaux</h3>
+                        <p>Tenez vos animaux domestiques éloignés de la zone</p>
+                    </div>
+                    <div class="rounded-xl border p-4 lowlevelcolor">
+                        <h3 class="font-semibold mb-1">Signalez Rapidement</h3>
+                        <p>Plus le signalement est rapide, plus la protection est efficace</p>
+                    </div>
+                </div>
+            </article>
+        </section>
     </section>
 </main>
-
-
-
-
 {% endblock %}

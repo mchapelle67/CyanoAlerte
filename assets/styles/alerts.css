@@ -21,4 +21,7 @@
     .alert-container {
         @apply mx-10 p-8 text-gray-700 bg-white custom-border border border-gray-200;
     }
+    .alert-container h2 {
+        @apply custom-h3 text-green-900 flex items-center gap-2 mb-8;
+    }
 }

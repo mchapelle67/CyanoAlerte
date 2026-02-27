@@ -10,30 +10,31 @@
 <main id="wrapper">
     <section class="bg-white/90 backdrop-blur-sm p-4 border-b border-gray-100">
         <twig:TerciaryButton 
-            label="Retour à l'accueil"
-            class="font-medium text-lg"
-            href="{{ path('app_home') }}"
+        label="Retour à l'accueil"
+        class="font-medium text-lg"
+        href="{{ path('app_home') }}"
         />
     </section>
     <section class="relative h-1/3 w-full flex items-center">
         <figure class="hero-figure">
             <img 
-                fetchpriority="high"
-                loading="eager"
-                decoding="async"
-                src="{{ asset('images/lac.jpg') }}" 
-                {# srcset="
-                    ../images/lac-960.jpg 960w,
-                    ../images/lac-1536.jpg 1536w,
-                    ../images/lac-2048.jpg 2048w,
-                    ../images/lac-2560.jpg 2560w
-                "
-                sizes="100vw" #}
-                alt="Image de fond composé d'une forme géométrique"
-                class="object-cover w-full h-full">
+            fetchpriority="high"
+            loading="eager"
+            decoding="async"
+            src="{{ asset('images/lac.jpg') }}" 
+            {# srcset="
+            ../images/lac-960.jpg 960w,
+            ../images/lac-1536.jpg 1536w,
+            ../images/lac-2048.jpg 2048w,
+            ../images/lac-2560.jpg 2560w
+            "
+            sizes="100vw" #}
+            alt="Image de fond composé d'une forme géométrique"
+            class="object-cover w-full h-full">
             <div class="absolute inset-0 bg-gradient-to-b from-black/50 via-black/20 to-transparent"></div>
         </figure>
         <div class="hero-content">
+            {% include 'sections/_flashMessages.html.twig' %}
             <div class="my-8 backdrop-blur-sm bg-white/10 rounded-3xl p-8 shadow-2xl border border-white/20 max-w-4xl">
                 <h1 class="custom-h1 text-white drop-shadow-lg mb-6">Toutes les alertes</h1>
                 <p class="custom-p text-white/90 drop-shadow-md leading-relaxed">
