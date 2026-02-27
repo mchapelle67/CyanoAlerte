@@ -6,6 +6,7 @@ import 'flowbite';
 import './js/map.js';
 import './js/apiGeo.js';
 import './js/alertForm.js';
+import './js/carroussel.js';
 
 /*
  * Welcome to your app's main JavaScript file!
