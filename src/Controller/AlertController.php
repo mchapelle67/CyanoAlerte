@@ -8,9 +8,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 final class AlertController extends AbstractController
 {
+    public function __construct(
+        private readonly SluggerInterface $slugger,
+    ) {
+    }
+
     #[Route('/alertes', name: 'app_alerts')]
     public function alertsAll(FormService $formService, Request $request, AlertsDataProvider $alertsDataProvider): Response
     {
@@ -97,15 +103,8 @@ final class AlertController extends AbstractController
             $timestamp = 'date-inconnue';
         }
 
-        $parts = [$name, $department, $timestamp];
-        $parts = array_map(static function (string $value): string {
-            $ascii = iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $value);
-            $normalized = strtolower($ascii !== false ? $ascii : $value);
-            $slug = preg_replace('/[^a-z0-9]+/', '-', $normalized) ?? '';
+        $base = sprintf('%s-%s-%s', $name, $department, $timestamp);
 
-            return trim($slug, '-') ?: 'inconnu';
-        }, $parts);
-
-        return implode('-', $parts);
+        return strtolower($this->slugger->slug($base)->toString());
     }
 }
