@@ -4,7 +4,7 @@ namespace App\Service\Form;
 
 use App\Entity\Alert;
 use App\Entity\Picture;
-use App\Form\AlertTypeForm;
+use App\Form\AlertType;
 use App\Service\MailerService;
 use App\Service\RateLimiterService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -45,7 +45,7 @@ class AlertFormService
     public function createAlertForm(): FormInterface 
     {
         $alert = new Alert();
-        return $this->formFactory->create(AlertTypeForm::class, $alert);
+        return $this->formFactory->create(AlertType::class, $alert);
     }
     
     public function handleAlertForm(Request $request): array 

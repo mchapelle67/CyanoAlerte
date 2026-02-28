@@ -9,7 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ReportTypeFormType extends AbstractType
+class ReportType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -21,10 +21,10 @@ class ReportTypeFormType extends AbstractType
                 ]
             ])
             ->add('description', TextareaType::class, [
-                'required' => false, 
-                'label' => "Details supplémentaires (facultatif)", 
+                'required' => false,
+                'label' => "Details supplémentaires (facultatif)",
                 'attr' => [
-                    'rows' => 4, 
+                    'rows' => 4,
                     'placeholder' => "Ajouter des informations complémentaires ..."
                 ]
             ])
