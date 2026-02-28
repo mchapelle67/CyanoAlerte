@@ -40,14 +40,24 @@ final class AlertController extends AbstractController
     public function alertDetail(string $slug, AlertFormService $formService, AlertsDataProvider $alertsDataProvider, Request $request, SlugService $slugService, ReportFormService $reportFormService): Response
     {
         $result = $formService->handleAlertForm($request);
+        $reportResult = $reportFormService->sendReport($request);
 
+        // Gestion du feedback pour le formulaire d'alerte
         if ($result['success']) {
             $this->addFlash('success', $result['message']);
             return $this->redirectToRoute('app_home');
         }
-
         if ($result['message']) {
             $this->addFlash('error', $result['message']);
+        }
+
+        // Gestion du feedback pour le formulaire de signalement
+        if (isset($reportResult['success']) && $reportResult['success']) {
+            $this->addFlash('success', $reportResult['message']);
+            return $this->redirectToRoute('app_alert_detail', ['slug' => $slug]);
+        }
+        if (isset($reportResult['message']) && $reportResult['message']) {
+            $this->addFlash('error', $reportResult['message']);
         }
 
         $alertsData = $alertsDataProvider->getAlertsData();
@@ -63,7 +73,7 @@ final class AlertController extends AbstractController
             'slug' => $slug,
             'alert_form' => $result['form']->createView(),
             'alert' => $alert,
-            'report_form' => $reportFormService->createReportForm()->createView(),
+            'report_form' => isset($reportResult['form']) ? $reportResult['form']->createView() : $reportFormService->createReportForm()->createView(),
         ]);
     }
 }

@@ -42,7 +42,7 @@ class ReportFormService
                 ];
             }
 
-            // // Envoyer un email de notification à l'admin
+            // envoyer un email de notification à l'admin
             $this->mailerService->sendEmail(
                 'manon.chp68@gmail.com',
                 'Une alerte a été signalée',
