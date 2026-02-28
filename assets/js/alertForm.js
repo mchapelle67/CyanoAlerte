@@ -18,8 +18,8 @@ document.addEventListener('DOMContentLoaded', function() {
             // récupère la ville et le département en arrière-plan (asynchrone)
             if (window.getCityFromCoordinates) {                
                 const citySearchInput = document.getElementById('citySearchInput'); // Input manuel autocomplete
-                const cityFormInput = document.querySelector('[name="alert_type_form[waterbody][city]"]'); // Vrai champ Symfony
-                const depInput = document.getElementById('alert_type_form_waterbody_department');
+                const cityFormInput = document.getElementById('alert_waterbody_city'); // Vrai champ Symfony
+                const depInput = document.getElementById('alert_waterbody_department');
 
 
                 if (citySearchInput) {
@@ -50,8 +50,8 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             // remplit les inputs cachés
-            const latForm = document.getElementById('alert_type_form_waterbody_latitude');
-            const lngForm = document.getElementById('alert_type_form_waterbody_longitude');
+            const latForm = document.getElementById('alert_waterbody_latitude');
+            const lngForm = document.getElementById('alert_waterbody_longitude');
             if (latForm) latForm.value = lat;
             if (lngForm) lngForm.value = lng;
         }
@@ -76,10 +76,10 @@ document.addEventListener('DOMContentLoaded', function() {
     function fillFormFromCity(cityData) {
         
         const citySearchInput = document.getElementById('citySearchInput'); 
-        const cityFormInput = document.querySelector('[name="alert_type_form[waterbody][city]"]'); 
-        const depInput = document.getElementById('alert_type_form_waterbody_department');
-        const latInput = document.getElementById('alert_type_form_waterbody_latitude');
-        const lngInput = document.getElementById('alert_type_form_waterbody_longitude');
+        const cityFormInput = document.getElementById('alert_waterbody_city'); 
+        const depInput = document.getElementById('alert_waterbody_department');
+        const latInput = document.getElementById('alert_waterbody_latitude');
+        const lngInput = document.getElementById('alert_waterbody_longitude');
         const positionSpan = document.getElementById('position-display');
         const customText = document.getElementById('custom-text');
         
