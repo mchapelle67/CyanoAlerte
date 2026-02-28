@@ -6,16 +6,15 @@ use App\Entity\Alert;
 use App\Entity\Picture;
 use App\Form\AlertTypeForm;
 use App\Service\MailerService;
-use Symfony\Component\Form\FormError;
+use App\Service\RateLimiterService;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Form\FormInterface;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Form\FormFactoryInterface;
-use Symfony\Component\RateLimiter\RateLimiterFactory;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Form\FormError;
+use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
-
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\Request;
 
 class AlertFormService
 {
@@ -23,15 +22,15 @@ class AlertFormService
     private $entityManager;
     private $mailerService;
     private $photoDirectory;
-    private $alertLimiter;
+    private $rateLimiterService;
 
 
     public function __construct(
         EntityManagerInterface $entityManager, 
         FormFactoryInterface $formFactory, 
         MailerService $mailerService,
+        RateLimiterService $rateLimiterService,
         #[Autowire('%kernel.project_dir%/public/uploads/photos')] string $photoDirectory,
-        #[Autowire(service: 'limiter.alert_form')] RateLimiterFactory $alertLimiter
     )
     {
         // pour créer le form (pas de fonction hérité de abstractController dans un service)
@@ -39,7 +38,7 @@ class AlertFormService
         $this->entityManager = $entityManager;
         $this->mailerService = $mailerService;
         $this->photoDirectory = $photoDirectory;
-        $this->alertLimiter = $alertLimiter;
+        $this->rateLimiterService = $rateLimiterService;
         
     }
 
@@ -59,7 +58,7 @@ class AlertFormService
             $alert = $form->getData();
             
             // vérifier le rate limit
-            $rateLimitError = $this->checkRateLimit($request);
+            $rateLimitError = $this->rateLimiterService->checkRateLimit($request);
             if ($rateLimitError) {
                 return [
                     'success' => false,
@@ -91,15 +90,6 @@ class AlertFormService
                 'emails/txt/adminAlert.txt.twig',
                 ['alert' => $alert]  
             );
-
-            // Envoyer un email de notification au créateur du signalement
-            // $this->mailerService->sendEmail(
-            //     $alert->getEmail(),
-            //     'Merci pour votre contribution !',
-            //     'emails/twig/creatorAlert.html.twig',
-            //     'emails/txt/creatorAlert.txt.twig',
-            //     ['alert' => $alert] 
-            // );
 
             return [
                 'success' => true,
@@ -152,18 +142,5 @@ class AlertFormService
             }
         }
         return null; 
-    }
-
-    private function checkRateLimit(Request $request): ?string
-    {
-        // utilise l'IP du client comme identifiant unique
-        $limiter = $this->alertLimiter->create($request->getClientIp());
-        
-        // tente de consommer 1 jeton
-        if (!$limiter->consume(1)->isAccepted()) {
-            return 'Trop de formulaires envoyés. Veuillez patienter avant de soumettre un nouveau signalement.';
-        }
-        
-        return null;
     }
 }
