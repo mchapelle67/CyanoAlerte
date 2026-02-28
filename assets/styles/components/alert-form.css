@@ -1,6 +1,0 @@
-@layer components {
-  label.required:after { 
-    @apply ml-1;
-    content: "*";
-  }
-}

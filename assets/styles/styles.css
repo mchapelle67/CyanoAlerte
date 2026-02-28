@@ -47,4 +47,8 @@
     .hero-content {
         @apply relative z-10 max-w-5xl mx-auto text-center flex flex-col justify-center items-center px-5;
     }
+    label.required:after { 
+    @apply ml-1;
+    content: "*";
+  }
 }
