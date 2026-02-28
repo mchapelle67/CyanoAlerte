@@ -41,7 +41,7 @@ final class AlertController extends AbstractController
     }
 
     #[Route('/alerte/{slug}', name: 'app_alert_detail')]
-    public function alertDetail(FormService $formService, AlertsDataProvider $alertsDataProvider, Request $request): Response
+    public function alertDetail(FormService $formService, AlertsDataProvider $alertsDataProvider, Request $request, string $slug): Response
     {
         $result = $formService->handleAlertForm($request);
 
@@ -54,13 +54,13 @@ final class AlertController extends AbstractController
             $this->addFlash('error', $result['message']);
         }
 
-        $slug = (string) $request->attributes->get('slug');
+        $slugValue = $slug;
         $alertsData = $alertsDataProvider->getAlertsData();
         $alerts = $this->addSlugs($alertsData['alerts'] ?? []);
         $alert = null;
 
         foreach ($alerts as $item) {
-            if (($item['detail_slug'] ?? null) === $slug) {
+            if (($item['detail_slug'] ?? null) === $slugValue) {
                 $alert = $item;
                 break;
             }
@@ -73,7 +73,7 @@ final class AlertController extends AbstractController
 
         return $this->render('alert/alertDetail.html.twig', [
             'controller_name' => 'AlertController',
-            'slug' => $slug,
+            'slug' => $slugValue,
             'alert_form' => $result['form']->createView(),
             'alert' => $alert,
         ]);
