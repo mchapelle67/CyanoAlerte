@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Service\Data\AlertsDataProvider;
 use App\Service\Form\AlertFormService;
+use App\Service\Form\ReportFormService;
 use App\Service\SlugService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -36,7 +37,7 @@ final class AlertController extends AbstractController
     }
 
     #[Route('/alerte/{slug}', name: 'app_alert_detail')]
-    public function alertDetail(string $slug, AlertFormService $formService, AlertsDataProvider $alertsDataProvider, Request $request, SlugService $slugService): Response
+    public function alertDetail(string $slug, AlertFormService $formService, AlertsDataProvider $alertsDataProvider, Request $request, SlugService $slugService, ReportFormService $reportFormService): Response
     {
         $result = $formService->handleAlertForm($request);
 
@@ -62,6 +63,7 @@ final class AlertController extends AbstractController
             'slug' => $slug,
             'alert_form' => $result['form']->createView(),
             'alert' => $alert,
+            'report_form' => $reportFormService->createReportForm()->createView(),
         ]);
     }
 }

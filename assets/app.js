@@ -7,7 +7,7 @@ import './js/map.js';
 import './js/apiGeo.js';
 import './js/alertForm.js';
 import './js/carroussel.js';
-import './js/report.js';
+import './js/reportForm.js';
 
 /*
  * Welcome to your app's main JavaScript file!

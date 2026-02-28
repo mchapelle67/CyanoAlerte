@@ -45,7 +45,7 @@ class ReportFormService
             // // Envoyer un email de notification à l'admin
             $this->mailerService->sendEmail(
                 'manon.chp68@gmail.com',
-                'Une alerte à été signalée',
+                'Une alerte a été signalée',
                 'emails/twig/adminReport.html.twig',
                 'emails/txt/adminReport.txt.twig',
                 ['report' => $reportData]
