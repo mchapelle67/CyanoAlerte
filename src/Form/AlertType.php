@@ -3,15 +3,19 @@
 namespace App\Form;
 
 use App\Entity\Alert;
-use App\Form\WaterbodyForm;
 use App\Entity\ToxicityLevel;
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilderInterface;
+use App\Form\WaterbodyForm;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\All;
+use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+
 
 class AlertType extends AbstractType
 {
@@ -37,6 +41,32 @@ class AlertType extends AbstractType
                 'class' => ToxicityLevel::class,
                 'choice_label' => 'level',
                 'label' => "Niveau de suspicion"
+            ])
+            ->add('photos', FileType::class, [
+                'label' => 'Photos',
+                'multiple' => true,
+                'mapped' => false,
+                'required' => false,
+                'attr' => [
+                    'accept' => 'image/*',
+                ],
+                'constraints' => [
+                    new All([
+                        'constraints' => [
+                            new File([
+                                'maxSize' => '10M',
+                                'mimeTypes' => [
+                                    'image/jpeg',
+                                    'image/png',
+                                    'image/gif',
+                                    'image/webp'
+                                ],
+                                'mimeTypesMessage' => '<span class="my-2 text-red-700">Veuillez uploader une image valide (jpg, jpeg, png, gif, webp)</span>',
+                                'maxSizeMessage' => '<span class="my-2 text-red-700">Le fichier est trop volumineux ({{ size }} {{ suffix }}). Maximum autorisé : {{ limit }} {{ suffix }}.</span>'
+                            ]),
+                        ],
+                    ]),
+                ]
             ])
             ->add('submit', SubmitType::class, [
                 'label' => "Signaler",

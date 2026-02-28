@@ -59,9 +59,9 @@
                     {{ form_errors(alert_form.description) }}
                 </div>                 
                 <div class="mb-4 flex flex-col">
-                    {{ form_label(alert_form.waterbody.photos, null, {'label_attr': {'class': 'font-medium mb-2'}}) }}
+                    {{ form_label(alert_form.photos, null, {'label_attr': {'class': 'font-medium mb-2'}}) }}
                     <div class="flex items-center gap-3">
-                        <label for="{{ alert_form.waterbody.photos.vars.id }}" class="px-5 py-2.5 bg-custom-gradient btn-hover-effect text-white font-medium rounded-lg  cursor-pointer flex items-center gap-2">
+                        <label for="{{ alert_form.photos.vars.id }}" class="px-5 py-2.5 bg-custom-gradient btn-hover-effect text-white font-medium rounded-lg  cursor-pointer flex items-center gap-2">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM6.293 6.707a1 1 0 010-1.414l3-3a1 1 0 011.414 0l3 3a1 1 0 01-1.414 1.414L11 5.414V13a1 1 0 11-2 0V5.414L7.707 6.707a1 1 0 01-1.414 0z" clip-rule="evenodd" />
                             </svg>
@@ -70,10 +70,10 @@
                         <span id="file-chosen" class="text-sm text-gray-600 italic">Aucun fichier sélectionné</span>
                     </div> 
                     <div class="hidden">
-                        {{ form_widget(alert_form.waterbody.photos, {'attr': {'onchange': 'updateFileName(this)'}}) }}
+                        {{ form_widget(alert_form.photos, {'attr': {'onchange': 'updateFileName(this)'}}) }}
                     </div>       
                     <p class="mt-2 text-xs text-gray-500">PNG, JPG, JPEG, GIF, WEBP (Max. 10MB par fichier)</p>
-                    {{ form_errors(alert_form.waterbody.photos) }}
+                    {{ form_errors(alert_form.photos) }}
                 </div>
                 <div class="mb-4 flex flex-col">
                     {{ form_label(alert_form.email, null, {'label_attr': {'class': 'font-medium mb-2'}}) }}

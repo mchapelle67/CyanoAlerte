@@ -71,7 +71,7 @@ class AlertFormService
             $uploadError = $this->handlePhotoUpload($alert, $form);
             if ($uploadError) {
                 // Ajoute l'erreur au champ photos
-                $form->get('waterbody')->get('photos')->addError(new FormError($uploadError));
+                $form->get('photos')->addError(new FormError($uploadError));
                 return [
                     'success' => false,
                     'form' => $form,
@@ -115,7 +115,7 @@ class AlertFormService
     private function handlePhotoUpload(Alert $alert, FormInterface $form): ?string    
     {
         /** @var UploadedFile[] $photosFile */
-        $photosFile = $form->get('waterbody')->get('photos')->getData();
+        $photosFile = $form->get('photos')->getData();
             
         // si une photo est uploadée
         if ($photosFile) {
@@ -135,10 +135,10 @@ class AlertFormService
                     return 'Erreur lors de l\'upload de la photo : ' . $e->getMessage(); 
                 }
                    
-                                // on crée une nouvelle entité Photo
+                // on crée une nouvelle entité Photo
                 $photo = new Picture();
                 $photo->setUrl($newFilename);
-                                $alert->addPicture($photo);
+                $alert->addPicture($photo);
             }
         }
         return null; 
