@@ -23,7 +23,7 @@ class AlertTypeForm extends AbstractType
                 'label' => "Description des symptômes", 
                 'attr' => [
                     'rows' => 4, 
-                    'placeholder' => "Décrivez ce que vous avez observé: couleur de l'eau, présence d'écume, odeur, mortalisé de poisson..."
+                    'placeholder' => "Décrivez ce que vous avez observé: couleur de l'eau, présence d'écume, odeur, mortalité de poissons..."
                 ]
             ])
             ->add('email', EmailType::class, [
