@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Service\Data\AlertsDataProvider;
-use App\Service\Form\FormService;
+use App\Service\Form\AlertFormService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,7 +18,7 @@ final class AlertController extends AbstractController
     }
 
     #[Route('/alertes', name: 'app_alerts')]
-    public function alertsAll(FormService $formService, Request $request, AlertsDataProvider $alertsDataProvider): Response
+    public function alertsAll(AlertFormService $formService, Request $request, AlertsDataProvider $alertsDataProvider): Response
     {
         $result = $formService->handleAlertForm($request);
         $alertsData = $alertsDataProvider->getAlertsData();
@@ -41,7 +41,7 @@ final class AlertController extends AbstractController
     }
 
     #[Route('/alerte/{slug}', name: 'app_alert_detail')]
-    public function alertDetail(FormService $formService, AlertsDataProvider $alertsDataProvider, Request $request, string $slug): Response
+    public function alertDetail(AlertFormService $formService, AlertsDataProvider $alertsDataProvider, Request $request, string $slug): Response
     {
         $result = $formService->handleAlertForm($request);
 

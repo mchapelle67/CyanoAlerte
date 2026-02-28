@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 
-class FormService
+class AlertFormService
 {
     private $formFactory;
     private $entityManager;
