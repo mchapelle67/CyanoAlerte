@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service;
+namespace App\Service\Form;
 
 use App\Entity\Alert;
 use App\Entity\Picture;

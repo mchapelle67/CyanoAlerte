@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
-use App\Service\AlertsDataProvider;
-use App\Service\FormService;
+use App\Service\Data\AlertsDataProvider;
+use App\Service\Form\FormService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

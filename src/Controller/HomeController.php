@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
-use App\Service\FormService;
-use App\Service\HomeDataProvider;
+use App\Service\Data\HomeDataProvider;
+use App\Service\Form\FormService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
