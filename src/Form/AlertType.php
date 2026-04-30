@@ -36,6 +36,17 @@ class AlertType extends AbstractType
                     'placeholder' => "ex: email@email.com"
                 ]
             ])
+            ->add('bear', null, [
+                'mapped' => false,
+                'required' => false,
+                'attr' => [
+                    'style' => 'display:none;',
+                ],
+                'constraints' => [
+                    new \App\Validator\HoneyPot(),
+                ],
+                'label' => false,
+            ])
             ->add('waterbody', WaterbodyForm::class)
             ->add('toxicity_level', EntityType::class, [
                 'class' => ToxicityLevel::class,
