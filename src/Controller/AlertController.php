@@ -21,16 +21,17 @@ final class AlertController extends AbstractController
     {
         $result = $formService->handleAlertForm($request);
 
-        $searchForm = $this->createForm(SearchBarType::class);
+        $departmentChoices = $searchBarService->getDepartmentChoices();
+
+        $searchForm = $this->createForm(SearchBarType::class, null, ['departments' => $departmentChoices]);
         $searchForm->handleRequest($request);
 
         $filters = $searchForm->isSubmitted() ? $searchForm->getData() : $request->query->all();
 
         $alertsData = $alertsDataProvider->getAlertsData();
-        $rawAlerts = $alertsData['alerts'] ?? [];
 
-        $alerts = $slugService->addSlugs($rawAlerts);
-
+        $alerts = $slugService->addSlugs($alertsData['alerts'] ?? []);
+        
         $alerts = $searchBarService->filterAlerts($alerts, $filters);
 
         $alertsData['totalAlerts'] = count($alerts);
