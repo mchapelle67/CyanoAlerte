@@ -2,10 +2,12 @@
 
 namespace App\Controller;
 
+use App\Form\SearchBarType;
 use App\Service\Data\AlertsDataProvider;
 use App\Service\Form\AlertFormService;
 use App\Service\Form\ReportFormService;
 use App\Service\PaginationService;
+use App\Service\SearchBarService;
 use App\Service\SlugService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,14 +17,23 @@ use Symfony\Component\Routing\Attribute\Route;
 final class AlertController extends AbstractController
 {
     #[Route('/alertes', name: 'app_alerts')]
-    public function alertsAll(AlertFormService $formService, Request $request, AlertsDataProvider $alertsDataProvider, SlugService $slugService, PaginationService $paginationService): Response
+    public function alertsAll(AlertFormService $formService, Request $request, AlertsDataProvider $alertsDataProvider, SlugService $slugService, PaginationService $paginationService, SearchBarService $searchBarService): Response
     {
         $result = $formService->handleAlertForm($request);
+
+        $searchForm = $this->createForm(SearchBarType::class);
+        $searchForm->handleRequest($request);
+        
+        $filters = $searchForm->isSubmitted() ? $searchForm->getData() : $request->query->all();
 
         $alertsData = $alertsDataProvider->getAlertsData();
 
         $alerts = $slugService->addSlugs($alertsData['alerts'] ?? []);
         
+        $alerts = $searchBarService->filterAlerts($alerts, $filters);
+
+        $alertsData['totalAlerts'] = count($alerts);
+
         $alertsData['alerts'] = $paginationService->paginate(
         $alerts,
         $request,
@@ -41,6 +52,7 @@ final class AlertController extends AbstractController
         return $this->render('alert/alertsAll.html.twig', [
             'controller_name' => 'AlertController',
             'alert_form' => $result['form']->createView(),
+            'search_form' => $searchForm->createView(),
             'alertsData' => $alertsData
         ]);
     }
