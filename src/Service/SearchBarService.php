@@ -4,6 +4,7 @@ namespace App\Service;
 
 class SearchBarService
 {
+
     public function filterAlerts(array $alerts, array $filters): array
     {
         return array_values(array_filter($alerts, function ($alert) use ($filters) {

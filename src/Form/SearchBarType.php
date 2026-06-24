@@ -21,7 +21,18 @@ class SearchBarType extends AbstractType
             ])
             ->add('toxicity', EntityType::class, [
                 'class' => ToxicityLevel::class,
-                'choice_label' => 'level',
+                'choice_label' => function (?ToxicityLevel $level) {
+                    if (!$level) {
+                        return '';
+                    }
+
+                    return match ($level->getId()) {
+                        1 => 'Niveau faible',
+                        2 => 'Niveau modéré',
+                        3 => 'Niveau fort',
+                        default => 'Niveau ' . $level->getLevel(),
+                    };
+                },
                 'required' => false,
                 'placeholder' => 'Tous les niveaux',
             ])
@@ -34,6 +45,11 @@ class SearchBarType extends AbstractType
                     'Moins de 7 jours' => '7d',
                     'Moins de 30 jours' => '30d',
                 ],
+            ])
+            ->add('department', ChoiceType::class, [
+                'required' => false,
+                'placeholder' => 'Tous les départements',
+                'choices' => $options['departments'] ?? [],
             ]);
     }
 
@@ -42,6 +58,7 @@ class SearchBarType extends AbstractType
         $resolver->setDefaults([
             'method' => 'GET',
             'csrf_protection' => false,
+            'departments' => [],
         ]);
     }
 }
