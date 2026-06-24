@@ -1,0 +1,30 @@
+{# Composant pagination réutilisable (Tailwind minimal)
+   Usage: {{ knp_pagination_render(pagination, 'components/pagination.html.twig') }}
+   Le template attend les variables fournies par KNP: pageCount, current, pagesInRange, previous, next, route, query, pageParameterName
+#}
+
+{% if pageCount > 1 %}
+<nav class="flex justify-center mt-6" role="navigation" aria-label="Pagination">
+  <ul class="inline-flex items-center gap-2 bg-white/95 border border-gray-100 rounded-md p-1 shadow-sm overflow-hidden">
+    {% if previous is defined %}
+      <li><a href="{{ path(route, query|merge({(pageParameterName): previous})) }}" rel="prev" class="px-3 py-2 rounded text-gray-700 hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-200" aria-label="Page précédente">‹</a></li>
+    {% else %}
+      <li><span class="px-2 py-1 rounded text-gray-400 opacity-50">‹</span></li>
+    {% endif %}
+
+    {% for page in pagesInRange %}
+      {% if page != current %}
+        <li><a href="{{ path(route, query|merge({(pageParameterName): page})) }}" class="px-4 py-2 rounded text-base text-gray-700 hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-200" aria-label="Aller à la page {{ page }}">{{ page }}</a></li>
+      {% else %}
+        <li><span class="px-4 py-2 rounded bg-blue-600/90 text-white text-base shadow-sm" aria-current="page">{{ page }}</span></li>
+      {% endif %}
+    {% endfor %}
+
+    {% if next is defined %}
+      <li><a href="{{ path(route, query|merge({(pageParameterName): next})) }}" rel="next" class="px-3 py-2 rounded text-gray-700 hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-200" aria-label="Page suivante">›</a></li>
+    {% else %}
+      <li><span class="px-2 py-1 rounded text-gray-400 opacity-50">›</span></li>
+    {% endif %}
+  </ul>
+</nav>
+{% endif %}

@@ -83,6 +83,9 @@
                 <p>Aucune alerte active.</p>
             {% endif %}
         {% endfor %}
+
+        {{ knp_pagination_render(alertsData.alerts, 'components/pagination.html.twig') }}  
+              
     </section>
 </main>
 

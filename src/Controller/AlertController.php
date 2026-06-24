@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Service\Data\AlertsDataProvider;
 use App\Service\Form\AlertFormService;
 use App\Service\Form\ReportFormService;
+use App\Service\PaginationService;
 use App\Service\SlugService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,12 +15,20 @@ use Symfony\Component\Routing\Attribute\Route;
 final class AlertController extends AbstractController
 {
     #[Route('/alertes', name: 'app_alerts')]
-    public function alertsAll(AlertFormService $formService, Request $request, AlertsDataProvider $alertsDataProvider, SlugService $slugService): Response
+    public function alertsAll(AlertFormService $formService, Request $request, AlertsDataProvider $alertsDataProvider, SlugService $slugService, PaginationService $paginationService): Response
     {
         $result = $formService->handleAlertForm($request);
+
         $alertsData = $alertsDataProvider->getAlertsData();
-        $alertsData['alerts'] = $slugService->addSlugs($alertsData['alerts'] ?? []);
+
+        $alerts = $slugService->addSlugs($alertsData['alerts'] ?? []);
         
+        $alertsData['alerts'] = $paginationService->paginate(
+        $alerts,
+        $request,
+        10
+        );
+
         if ($result['success']) {
             $this->addFlash('success', $result['message']);
             return $this->redirectToRoute('app_home');
